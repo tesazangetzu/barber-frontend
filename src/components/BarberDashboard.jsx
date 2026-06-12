@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 
 const API_BASE = import.meta.env.PUBLIC_API_BASE;
 
+const getLimaDateStr = (date) =>
+  date.toLocaleDateString("en-CA", { timeZone: "America/Lima" });
+
 export default function BarberDashboard() {
   const [barber, setBarber] = useState(null);
   const [admin, setAdmin] = useState(null);
@@ -9,7 +12,7 @@ export default function BarberDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().split("T")[0],
+    getLimaDateStr(new Date()),
   );
   const [paymentModalApp, setPaymentModalApp] = useState(null);
   const [localPaymentMethod, setLocalPaymentMethod] = useState("LOCAL_CASH"); // LOCAL_CASH or LOCAL_CARD
@@ -48,27 +51,25 @@ export default function BarberDashboard() {
     const token = barber?.access_token;
 
     try {
-      const res = await fetch(
-        `${API_BASE}/appointments/barber/${barber.id}/today`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const params = new URLSearchParams({
+        barber_id: barber.id,
+        start_date: selectedDate,
+        end_date: selectedDate,
+        order: "ASC",
+      });
+
+      const res = await fetch(`${API_BASE}/appointments?${params}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
 
       if (!res.ok) {
         throw new Error("No se pudo recuperar la agenda del barbero.");
       }
 
       const data = await res.json();
-      const filtered = data.filter((app) => {
-        const appDate = app.start_time.substring(0, 10);
-        return appDate === selectedDate;
-      });
-
-      filtered.sort((a, b) => new Date(a.start_time) - new Date(b.start_time));
-      setAppointments(filtered);
+      setAppointments(data);
     } catch (err) {
       console.warn("Error al obtener la agenda desde el backend.", err);
       setError("No se pudo cargar la agenda.");
@@ -150,7 +151,7 @@ export default function BarberDashboard() {
     return (
       <div className="w-full flex flex-col min-h-screen pb-12">
         <div className="bg-surface/40 border border-surface/50 rounded-2xl p-4 mb-6 flex justify-between items-center relative overflow-hidden">
-        <div className="absolute left-0 top-0 w-32 h-32 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
+          <div className="absolute left-0 top-0 w-32 h-32 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 rounded-full bg-accent/10 border border-accent/35 flex items-center justify-center text-xl shrink-0">
               👑
@@ -289,7 +290,7 @@ export default function BarberDashboard() {
     for (let i = -1; i <= 2; i++) {
       const d = new Date();
       d.setDate(today.getDate() + i);
-      const dateStr = d.toISOString().split("T")[0];
+      const dateStr = getLimaDateStr(d);
       days.push({
         dateStr,
         label:
@@ -300,6 +301,7 @@ export default function BarberDashboard() {
               : d.toLocaleDateString("es-ES", {
                   day: "numeric",
                   month: "short",
+                  timeZone: "America/Lima",
                 }),
       });
     }
