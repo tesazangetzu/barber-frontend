@@ -1,0 +1,107 @@
+---
+import { Calendar, Users, Scissors, BarChart3, LogOut } from "lucide-react";
+---
+
+<aside
+  class="fixed left-0 top-16 h-screen w-64 bg-gradient-to-b from-blue-900 to-blue-800 text-white shadow-lg"
+>
+  <nav class="p-6">
+    <div class="mb-8 pb-6 border-b border-blue-700">
+      <h2 class="text-2xl font-bold flex items-center gap-2">
+        <BarChart3 size={24} />
+        <span>Panel Admin</span>
+      </h2>
+      <p class="text-blue-200 text-sm mt-2">👑 Superusuario</p>
+    </div>
+
+    <ul class="space-y-2">
+      <li>
+        <a
+          href="/admin/dashboard"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+          class:list={[
+            { "bg-blue-700": Astro.url.pathname === "/admin/dashboard" },
+          ]}
+        >
+          <BarChart3 size={20} />
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="/admin/barbers"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+          class:list={[
+            { "bg-blue-700": Astro.url.pathname === "/admin/barbers" },
+          ]}
+        >
+          <Users size={20} />
+          <span>Barberos</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="/admin/services"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+          class:list={[
+            { "bg-blue-700": Astro.url.pathname === "/admin/services" },
+          ]}
+        >
+          <Scissors size={20} />
+          <span>Servicios</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="/admin/schedules"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+          class:list={[
+            { "bg-blue-700": Astro.url.pathname === "/admin/schedules" },
+          ]}
+        >
+          <Calendar size={20} />
+          <span>Horarios</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="mt-auto pt-6 border-t border-blue-700">
+      <button
+        id="logout-btn"
+        class="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-600 transition-colors duration-200 text-red-100 hover:text-white"
+      >
+        <LogOut size={20} />
+        <span>Cerrar Sesión</span>
+      </button>
+    </div>
+  </nav>
+</aside>
+
+<script>
+  document.getElementById("logout-btn")?.addEventListener("click", () => {
+    localStorage.removeItem("admin");
+    localStorage.removeItem("barber");
+    window.location.href = "/";
+  });
+</script>
+
+<style>
+  aside {
+    z-index: 40;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  nav ul {
+    list-style: none;
+    padding: 0;
+    flex: 1;
+  }
+</style>

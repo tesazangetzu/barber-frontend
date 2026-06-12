@@ -1,0 +1,44 @@
+---
+import BookingWizard from "../components/BookingWizard";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Reservar Cita">
+  <div class="py-6">
+    <div class="flex items-center gap-2 mb-6">
+      <a
+        href="/"
+        class="p-2 rounded-lg bg-surface text-secondary hover:text-accent transition-colors"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-4 h-4"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"></path>
+        </svg>
+      </a>
+      <div>
+        <h1 class="text-xl font-serif font-bold text-white leading-tight">
+          Agenda tu Servicio
+        </h1>
+        <p class="text-[10px] uppercase font-bold text-accent tracking-wider">
+          God's Hands
+        </p>
+      </div>
+    </div>
+
+    <!-- Booking Wizard Island -->
+    <div
+      class="bg-surface/20 border border-surface/40 p-5 rounded-2xl shadow-xl"
+    >
+      <BookingWizard client:load />
+    </div>
+  </div>
+</Layout>

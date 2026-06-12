@@ -1,0 +1,123 @@
+---
+import ServiceCard from "../components/ServiceCard.astro";
+import Layout from "../layouts/Layout.astro";
+
+const API_BASE = import.meta.env.PUBLIC_API_BASE;
+
+let services: IService[] = [];
+let barbers: IBarber[] = [];
+try {
+  const [servicesRes, barbersRes] = await Promise.all([
+    fetch(`${API_BASE}/services`, {
+      signal: AbortSignal.timeout(2000),
+    }),
+    fetch(`${API_BASE}/barbers`, {
+      signal: AbortSignal.timeout(2000),
+    }),
+  ]);
+
+  if (servicesRes.ok) {
+    services = await servicesRes.json();
+  }
+  if (barbersRes.ok) {
+    barbers = await barbersRes.json();
+  }
+} catch (e) {
+  // Silent fallback
+}
+---
+
+<Layout title="Inicio">
+  <!-- Hero Section -->
+  <section class="py-8 flex flex-col items-center text-center">
+    <div
+      class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-semibold uppercase tracking-wider mb-4"
+    >
+      🪒 Estilo & Distinción Tradicional
+    </div>
+    <h1
+      class="text-4xl font-serif font-bold text-white tracking-wide leading-tight mb-3"
+    >
+      El Arte del Buen Vestir en tu <span class="text-accent">Cabello</span>
+    </h1>
+    <p class="text-secondary text-sm max-w-sm mb-6 leading-relaxed">
+      Experimenta el lujo de un afeitado clásico y cortes contemporáneos
+      diseñados a la medida en una atmósfera premium pensada para el caballero
+      moderno.
+    </p>
+    <a
+      href="/booking"
+      class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-accent text-surface font-bold hover:bg-accent/90 active:scale-[0.98] transition-all shadow-lg shadow-accent/20 text-center"
+    >
+      Reservar Cita Ahora
+    </a>
+  </section>
+
+  <!-- Feature Grid -->
+  <section class="py-6 grid grid-cols-2 gap-3">
+    <div
+      class="bg-surface/40 border border-surface/50 p-4 rounded-xl flex flex-col gap-2"
+    >
+      <span class="text-2xl">⏳</span>
+      <h3 class="font-bold text-white text-sm">Reserva en Segundos</h3>
+      <p class="text-secondary text-xs leading-relaxed">
+        Agenda tu cita en tiempo real desde tu celular en 1 minuto.
+      </p>
+    </div>
+    <div
+      class="bg-surface/40 border border-surface/50 p-4 rounded-xl flex flex-col gap-2"
+    >
+      <span class="text-2xl">🏆</span>
+      <h3 class="font-bold text-white text-sm">Barberos Expertos</h3>
+      <p class="text-secondary text-xs leading-relaxed">
+        Nuestro equipo cuenta con años de experiencia en estilo clásico.
+      </p>
+    </div>
+  </section>
+
+  <!-- Services List Section -->
+  <section class="py-6">
+    <div class="flex justify-between items-end mb-4">
+      <h2 class="text-xl font-serif font-bold text-white">
+        Nuestros Servicios
+      </h2>
+      <a
+        href="/booking"
+        class="text-xs font-semibold text-accent hover:underline">Ver Todos →</a
+      >
+    </div>
+
+    <div class="flex flex-col gap-3">
+      {services.map((service: IService) => <ServiceCard service={service} />)}
+    </div>
+  </section>
+
+  <!-- Barbers Section -->
+  <section class="py-6 mb-8">
+    <h2 class="text-xl font-serif font-bold text-white mb-4">Nuestro Equipo</h2>
+    <div class="grid grid-cols-2 gap-3">
+      {
+        barbers.length > 0 ? (
+          barbers.map((barber) => (
+            <div class="bg-surface/30 border border-surface/40 p-4 rounded-xl text-center flex flex-col items-center">
+              <div class="w-16 h-16 rounded-full bg-accent/10 border-2 border-accent flex items-center justify-center text-2xl mb-3">
+                🧔
+              </div>
+              <h3 class="font-bold text-white text-sm">{barber.name}</h3>
+              <span class="text-[10px] text-accent font-medium tracking-wide uppercase mb-2">
+                Barbero
+              </span>
+              <p class="text-secondary text-[11px] leading-relaxed">
+                {barber.email ?? "Contacto no disponible"}
+              </p>
+            </div>
+          ))
+        ) : (
+          <div class="col-span-2 bg-surface/30 border border-surface/40 p-4 rounded-xl text-secondary text-sm">
+            No hay barberos disponibles en este momento.
+          </div>
+        )
+      }
+    </div>
+  </section>
+</Layout>

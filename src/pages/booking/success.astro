@@ -1,0 +1,67 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Pago Exitoso">
+  <div class="py-12 flex flex-col items-center justify-center text-center animate-fadeIn">
+    <!-- Beautiful Premium Badge -->
+    <div class="w-20 h-20 rounded-full bg-success/10 border-2 border-success flex items-center justify-center text-4xl mb-6 shadow-lg shadow-success/15 animate-bounce">
+      ✅
+    </div>
+
+    <h1 class="text-2xl font-serif font-bold text-white tracking-wide leading-tight mb-2">
+      ¡Pago Confirmado!
+    </h1>
+    <p class="text-xs text-secondary max-w-xs mb-8 leading-relaxed">
+      Tu prepago ha sido procesado correctamente a través de MercadoPago. Hemos registrado tu reserva en nuestro sistema.
+    </p>
+
+    <!-- Interactive Ticket -->
+    <div class="w-full max-w-sm bg-surface/40 border border-surface p-6 rounded-2xl text-left shadow-xl relative overflow-hidden mb-8">
+      <div class="absolute top-0 left-0 right-0 h-1.5 bg-linear-to-r from-success via-success/90 to-success"></div>
+      
+      <h3 class="text-xs font-semibold text-secondary uppercase tracking-wider mb-4 border-b border-surface/60 pb-2">
+        Detalle de Transacción
+      </h3>
+
+      <div class="flex flex-col gap-3 text-xs">
+        <div class="flex justify-between">
+          <span class="text-secondary">Estado de Pago:</span>
+          <span class="font-bold text-success bg-success/10 px-2 py-0.5 rounded">Aprobado</span>
+        </div>
+        <div class="flex justify-between" id="payment-id-row">
+          <span class="text-secondary">ID de Pago:</span>
+          <span class="font-mono text-white" id="payment-id-val">-</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-secondary">Plataforma:</span>
+          <span class="font-medium text-white">MercadoPago</span>
+        </div>
+      </div>
+      
+      <div class="mt-6 border-t border-dashed border-surface/80 pt-4 text-center">
+        <p class="text-[10px] text-secondary leading-relaxed">
+          Te hemos enviado los detalles y confirmación de la cita a tu correo electrónico registrado. ¡Nos vemos pronto!
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-3 w-full">
+      <a href="/" class="w-full py-3.5 rounded-xl bg-accent text-surface font-bold hover:bg-accent/90 active:scale-[0.98] transition-all text-center text-sm">
+        Volver al Inicio
+      </a>
+      <a href="/booking" class="w-full py-3.5 rounded-xl border border-surface hover:bg-surface text-secondary font-bold transition-all text-center text-sm">
+        Reservar otra Cita
+      </a>
+  </div>
+
+  <script is:inline>
+    // Read query params from MercadoPago redirect
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentId = urlParams.get('payment_id') || urlParams.get('preference_id') || 'N/A';
+    const paymentIdVal = document.getElementById('payment-id-val');
+    if (paymentIdVal) {
+      paymentIdVal.textContent = paymentId;
+    }
+  </script>
+</Layout>

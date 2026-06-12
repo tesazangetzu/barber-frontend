@@ -1,0 +1,30 @@
+---
+const { service } = Astro.props;
+---
+
+<div
+  class="bg-surface/30 border border-surface/40 p-4 rounded-xl flex justify-between items-center gap-4 hover:border-accent/30 transition-colors"
+>
+  <div class="grow">
+    <h3 class="font-bold text-white text-sm mb-1">{service.name}</h3>
+    <p class="text-secondary text-xs line-clamp-2 leading-relaxed mb-2">
+      {service.description}
+    </p>
+    <span
+      class="inline-flex items-center text-[10px] text-secondary bg-surface px-2 py-0.5 rounded border border-surface"
+    >
+      🕒 {service.duration_minutes} min
+    </span>
+  </div>
+  <div class="flex flex-col items-end shrink-0">
+    <span class="text-accent font-bold font-serif text-lg">
+      S/ {Number(service.price).toFixed(2)}
+    </span>
+    <a
+      href="/booking"
+      class="mt-2 text-xs font-bold text-surface bg-accent px-3 py-1.5 rounded-lg hover:bg-accent/90 transition-colors"
+    >
+      Reservar
+    </a>
+  </div>
+</div>
