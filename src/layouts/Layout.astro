@@ -20,9 +20,11 @@ import { ClientRouter } from "astro:transitions";
     />
     <!-- Tailwind base & utilities are imported via global.css -->
   </head>
-  <body class="bg-bg text-primary font-sans min-h-screen flex flex-col">
+  <body
+    class="bg-(--midnight-navy) text-primary font-sans min-h-screen flex flex-col"
+  >
     <Header title={title} />
-    <main class="flex-1 container mx-auto p-4 mt-16">
+    <main>
       <slot />
     </main>
     <Footer />

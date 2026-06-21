@@ -29,32 +29,97 @@ try {
 
 <Layout title="Inicio">
   <!-- Hero Section -->
-  <section class="py-8 flex flex-col items-center text-center">
-    <div
-      class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-semibold uppercase tracking-wider mb-4"
-    >
-      🪒 Estilo & Distinción Tradicional
+  <section
+    class="relative h-screen flex flex-col items-center justify-center px-6 overflow-hidden"
+    data-kid="9"
+  >
+    <div class="absolute inset-0 z-0" data-kid="10">
+      <video
+        src="https://videos.pexels.com/video-files/8867532/8867532-sd_540_960_24fps.mp4"
+        poster="https://images.pexels.com/videos/8867532/adult-ailment-applying-barber-8867532.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=630"
+        autoplay=""
+        muted=""
+        loop=""
+        playsinline=""
+        class="w-full h-full object-cover opacity-50 scale-110"
+        data-kid="11"></video>
+      <div
+        class="absolute inset-0 bg-linear-to-b from-[#0a0f1a]/90 via-[#0a0f1a]/50 to-[#0a0f1a]"
+        data-kid="12"
+      >
+      </div>
     </div>
-    <h1
-      class="text-4xl font-serif font-bold text-white tracking-wide leading-tight mb-3"
+
+    <div
+      class="relative z-10 text-center flex flex-col items-center hero-animate"
+      data-kid="13"
+      style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;"
     >
-      El Arte del Buen Vestir en tu <span class="text-accent">Cabello</span>
-    </h1>
-    <p class="text-secondary text-sm max-w-sm mb-6 leading-relaxed">
-      Experimenta el lujo de un afeitado clásico y cortes contemporáneos
-      diseñados a la medida en una atmósfera premium pensada para el caballero
-      moderno.
-    </p>
-    <a
-      href="/booking"
-      class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-accent text-surface font-bold hover:bg-accent/90 active:scale-[0.98] transition-all shadow-lg shadow-accent/20 text-center"
+      <div class="w-16 h-[1.5px] bg-(--byzantine-gold) mb-8" data-kid="14">
+      </div>
+      <p
+        class="text-(--byzantine-gold) text-xs tracking-[0.5em] uppercase mb-4 font-medium"
+        data-kid="15"
+      >
+        EST. 2017 • CALLAO
+      </p>
+      <h1
+        class="font-serif text-5xl sm:text-6xl leading-[1.1] mb-8"
+        data-kid="16"
+      >
+        El Arte del Buen Vestir en tu <br data-kid="17" />
+        <span class="italic font-normal text-(--byzantine-gold)" data-kid="18"
+          >Cabello</span
+        >
+      </h1>
+      <p
+        class="text-off-white/70 max-w-70 text-sm leading-relaxed mb-12 font-light"
+        data-kid="19"
+      >
+        Experimenta el lujo de un afeitado clásico y cortes contemporáneos
+        diseñados a la medida en una atmósfera premium pensada para el caballero
+        moderno.
+      </p>
+      <a
+        href="/booking"
+        class="group relative px-12 py-5 overflow-hidden"
+        data-kid="20"
+      >
+        <div
+          class="absolute inset-0 border border-(--byzantine-gold)/60 transition-all group-hover:border-(--byzantine-gold) group-hover:scale-95"
+          data-kid="21"
+        >
+        </div>
+        <div
+          class="absolute inset-0 bg-(--byzantine-gold) translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"
+          data-kid="22"
+        >
+        </div>
+        <span
+          class="relative z-10 text-[10px] tracking-[0.4em] uppercase font-bold text-(--byzantine-gold) group-hover:text-(--midnight-navy) transition-colors duration-500"
+          data-kid="23">Reserve su silla</span
+        >
+      </a>
+    </div>
+
+    <div
+      class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center"
+      data-kid="24"
     >
-      Reservar Cita Ahora
-    </a>
+      <span
+        class="text-[10px] tracking-[0.2em] uppercase text-(--byzantine-gold)/50 mb-4 rotate-0"
+        data-kid="25">Scroll</span
+      >
+      <div
+        class="w-px h-16 bg-linear-to-b from-(--byzantine-gold) to-transparent"
+        data-kid="26"
+      >
+      </div>
+    </div>
   </section>
 
   <!-- Feature Grid -->
-  <section class="py-6 grid grid-cols-2 gap-3">
+  <section class="py-6 px-4 grid grid-cols-2 gap-3">
     <div
       class="bg-surface/40 border border-surface/50 p-4 rounded-xl flex flex-col gap-2"
     >
@@ -76,7 +141,7 @@ try {
   </section>
 
   <!-- Services List Section -->
-  <section class="py-6">
+  <section class="py-6 px-4">
     <div class="flex justify-between items-end mb-4">
       <h2 class="text-xl font-serif font-bold text-white">
         Nuestros Servicios
@@ -93,7 +158,7 @@ try {
   </section>
 
   <!-- Barbers Section -->
-  <section class="py-6 mb-8">
+  <section class="py-6 px-4 mb-8">
     <h2 class="text-xl font-serif font-bold text-white mb-4">Nuestro Equipo</h2>
     <div class="grid grid-cols-2 gap-3">
       {
