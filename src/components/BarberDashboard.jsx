@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import PaymentModal from "./modals/PaymentModal";
+import OnlinePaymentInfoModal from "./modals/OnlinePaymentInfoModal";
+import EditServiceModal from "./modals/EditServiceModal";
 
 const API_BASE = import.meta.env.PUBLIC_API_BASE;
 
@@ -11,12 +14,13 @@ export default function BarberDashboard() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [selectedDate, setSelectedDate] = useState(
-    getLimaDateStr(new Date()),
-  );
+  const [selectedDate, setSelectedDate] = useState(getLimaDateStr(new Date()));
   const [paymentModalApp, setPaymentModalApp] = useState(null);
   const [localPaymentMethod, setLocalPaymentMethod] = useState("LOCAL_CASH"); // LOCAL_CASH or LOCAL_CARD
   const [showOnlineModalBarber, setShowOnlineModalBarber] = useState(false);
+  const [editServiceModalApp, setEditServiceModalApp] = useState(null);
+  const [services, setServices] = useState([]);
+  const [selectedServiceId, setSelectedServiceId] = useState(null);
 
   // Check auth and session
   useEffect(() => {
@@ -44,6 +48,25 @@ export default function BarberDashboard() {
     if (!barber) return;
     fetchAppointments();
   }, [barber, selectedDate]);
+
+  // Fetch services for edit modal
+  useEffect(() => {
+    const fetchServices = async () => {
+      const token = barber?.access_token;
+      try {
+        const res = await fetch(`${API_BASE}/services`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setServices(data);
+        }
+      } catch (e) {
+        console.warn("Error al obtener servicios", e);
+      }
+    };
+    if (barber) fetchServices();
+  }, [barber]);
 
   const fetchAppointments = async () => {
     setLoading(true);
@@ -131,6 +154,37 @@ export default function BarberDashboard() {
       }
 
       setPaymentModalApp(null);
+      fetchAppointments();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const openEditServiceModal = (app) => {
+    setEditServiceModalApp(app);
+    setSelectedServiceId(app.service.id);
+  };
+
+  const submitServiceChange = async () => {
+    if (!editServiceModalApp || !selectedServiceId) return;
+    const token = barber?.access_token;
+    const appId = editServiceModalApp.id;
+
+    try {
+      const res = await fetch(`${API_BASE}/appointments/${appId}/service`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ service_id: selectedServiceId }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Error al actualizar el servicio.");
+      }
+
+      setEditServiceModalApp(null);
       fetchAppointments();
     } catch (err) {
       alert(err.message);
@@ -419,7 +473,7 @@ export default function BarberDashboard() {
                         {app.service.name}
                       </span>
                       <span className="text-accent font-serif font-bold text-sm">
-                        ${Number(app.service.price).toFixed(2)}
+                        S/{Number(app.service.price).toFixed(2)}
                       </span>
                     </div>
                   </div>
@@ -429,14 +483,23 @@ export default function BarberDashboard() {
                 {app.status !== "CANCELLED" && app.status !== "COMPLETED" && (
                   <div className="flex gap-2 border-t border-surface/50 pt-3">
                     {app.status === "CONFIRMED" && (
-                      <button
-                        onClick={() =>
-                          handleStatusChange(app.id, "IN_PROGRESS")
-                        }
-                        className="grow py-2 rounded-xl bg-accent text-surface font-bold text-xs hover:bg-accent/90 transition-colors"
-                      >
-                        Iniciar Servicio 💈
-                      </button>
+                      <>
+                        <button
+                          onClick={() =>
+                            handleStatusChange(app.id, "IN_PROGRESS")
+                          }
+                          className="grow py-2 rounded-xl bg-accent text-surface font-bold text-xs hover:bg-accent/90 transition-colors"
+                        >
+                          Iniciar Servicio 💈
+                        </button>
+                        <button
+                          onClick={() => openEditServiceModal(app)}
+                          className="py-2 px-3 rounded-xl border border-surface hover:bg-surface text-[11px] font-bold text-secondary hover:text-white transition-colors shrink-0"
+                          title="Editar Servicio"
+                        >
+                          ✏️ Editar
+                        </button>
+                      </>
                     )}
                     {app.status === "IN_PROGRESS" && (
                       <button
@@ -474,116 +537,29 @@ export default function BarberDashboard() {
         )}
       </div>
 
-      {/* Local Payment Modal */}
-      {paymentModalApp && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-xs bg-surface/90 border border-surface rounded-2xl p-5 shadow-2xl animate-scaleUp">
-            <h3 className="font-serif font-bold text-white text-base mb-1">
-              Registrar Pago Local
-            </h3>
-            <p className="text-[11px] text-secondary mb-4">
-              Confirma la recepción del cobro presencial para la cita de{" "}
-              {paymentModalApp.client_name}.
-            </p>
-
-            <div className="p-3 bg-surface/20 border border-surface/30 rounded-xl flex justify-between items-center mb-4">
-              <span className="text-xs text-secondary">
-                {paymentModalApp.service.name}
-              </span>
-              <span className="text-accent font-serif font-bold text-base">
-                ${Number(paymentModalApp.service.price).toFixed(2)}
-              </span>
-            </div>
-
-            <div className="flex flex-col gap-2.5 mb-6">
-              <label className="block text-[10px] font-semibold text-secondary uppercase tracking-wider">
-                Método de cobro
-              </label>
-
-              <div
-                onClick={() => setLocalPaymentMethod("LOCAL_CASH")}
-                className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3 ${
-                  localPaymentMethod === "LOCAL_CASH"
-                    ? "bg-accent/10 border-accent text-white"
-                    : "bg-surface/30 border-surface/40 text-secondary hover:border-surface/60"
-                }`}
-              >
-                <span className="text-lg">💵</span>
-                <span className="text-xs font-bold">Efectivo</span>
-              </div>
-
-              <div
-                onClick={() => setLocalPaymentMethod("LOCAL_CARD")}
-                className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3 ${
-                  localPaymentMethod === "LOCAL_CARD"
-                    ? "bg-accent/10 border-accent text-white"
-                    : "bg-surface/30 border-surface/40 text-secondary hover:border-surface/60"
-                }`}
-              >
-                <span className="text-lg">💳</span>
-                <span className="text-xs font-bold">
-                  Terminal Física (Tarjeta)
-                </span>
-              </div>
-
-              <div
-                onClick={() => {
-                  setPaymentModalApp(null);
-                  setShowOnlineModalBarber(true);
-                }}
-                className="p-3 rounded-xl border border-surface/40 text-secondary hover:border-surface/60 hover:text-white cursor-pointer transition-all flex items-center gap-3"
-              >
-                <span className="text-lg">🌐</span>
-                <span className="text-xs font-bold">
-                  Pago en Línea (MercadoPago)
-                </span>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <button
-                onClick={() => setPaymentModalApp(null)}
-                className="flex-1 py-2.5 rounded-xl border border-surface hover:bg-surface text-secondary font-bold text-xs transition-colors"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={submitLocalPayment}
-                className="flex-1 py-2.5 rounded-xl bg-accent text-surface font-bold text-xs hover:bg-accent/90 transition-colors"
-              >
-                Cobrado ✅
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-      {/* Modal: Pago en línea próximamente (Barber Dashboard) */}
-      {showOnlineModalBarber && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setShowOnlineModalBarber(false)}
-          />
-          <div className="relative max-w-sm w-full bg-surface/90 border border-surface/60 rounded-2xl p-6 shadow-xl">
-            <h3 className="text-lg font-bold text-white mb-2">
-              Pago en Línea - Próximamente
-            </h3>
-            <p className="text-xs text-secondary mb-4">
-              La integración de pagos en línea (MercadoPago) estará disponible
-              pronto. Por ahora registra pagos en efectivo o con terminal
-              física.
-            </p>
-            <div className="flex justify-end">
-              <button
-                onClick={() => setShowOnlineModalBarber(false)}
-                className="px-4 py-2 rounded-lg bg-accent text-surface font-bold hover:bg-accent/90 transition-colors"
-              >
-                Entendido
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <PaymentModal
+        app={paymentModalApp}
+        localPaymentMethod={localPaymentMethod}
+        onMethodChange={setLocalPaymentMethod}
+        onSubmit={submitLocalPayment}
+        onClose={() => setPaymentModalApp(null)}
+        onOnlineClick={() => {
+          setPaymentModalApp(null);
+          setShowOnlineModalBarber(true);
+        }}
+      />
+      <OnlinePaymentInfoModal
+        isOpen={showOnlineModalBarber}
+        onClose={() => setShowOnlineModalBarber(false)}
+      />
+      <EditServiceModal
+        app={editServiceModalApp}
+        services={services}
+        selectedServiceId={selectedServiceId}
+        onServiceChange={setSelectedServiceId}
+        onSubmit={submitServiceChange}
+        onClose={() => setEditServiceModalApp(null)}
+      />
     </div>
   );
 }
