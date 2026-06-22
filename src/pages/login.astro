@@ -1,10 +1,11 @@
 ---
+import Button from "../components/Button";
 import Layout from "../layouts/Layout.astro";
 const API_BASE = import.meta.env.PUBLIC_API_BASE;
 ---
 
 <Layout title="Acceso de Barberos">
-  <div class="py-10 flex flex-col items-center animate-fadeIn">
+  <div class="py-10 px-4 flex flex-col items-center mt-22 animate-fadeIn">
     <!-- Beautiful Header Logo / Icon -->
     <div
       class="w-16 h-16 rounded-full bg-accent/10 border border-accent/30 flex items-center justify-center text-3xl mb-4 shadow-lg shadow-accent/5"
@@ -65,18 +66,19 @@ const API_BASE = import.meta.env.PUBLIC_API_BASE;
           />
         </div>
 
-        <button
-          type="submit"
+        <Button
           id="submit-btn"
-          class="w-full mt-2 py-3.5 rounded-xl bg-accent text-surface font-bold hover:bg-accent/90 transition-colors flex items-center justify-center gap-2"
+          type="submit"
+          variant="primary"
+          nClass="w-full mt-2 py-4 px-1"
         >
           <span id="btn-text">Ingresar al Dashboard</span>
           <div
             id="btn-spinner"
-            class="hidden w-4 h-4 border-2 border-surface border-t-transparent rounded-full animate-spin"
+            class="hidden w-4 h-4 border-2 border-surface border-t-transparent rounded-full animate-spin order-1"
           >
           </div>
-        </button>
+        </Button>
       </form>
       <p class="text-center text-[12px] text-secondary mt-4">
         ¿Eres superusuario? <a

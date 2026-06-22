@@ -19,6 +19,7 @@
   --font-outfit: "Outfit", sans-serif;
   --font-playfair: "Playfair Display", serif;
   --animate-slide-in: slideInLeft 0.8s ease-out forwards;
+  --animate-swing: swing 2s ease-in-out forwards;
 }
 
 @keyframes slideInLeft {
@@ -29,6 +30,28 @@
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(0deg);
+  }
+  12.5% {
+    transform: rotate(10deg);
+  }
+  25% {
+    transform: rotate(-8deg);
+  }
+  37.5% {
+    transform: rotate(4deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  /* Pausa */
+  100% {
+    transform: rotate(0deg);
   }
 }
 
@@ -43,6 +66,14 @@
   ::selection {
     background-color: var(--accent);
     color: #121212;
+  }
+}
+
+.icon-swing {
+  animation-play-state: paused;
+  transform-origin: top center;
+  &.visible {
+    animation-play-state: running;
   }
 }
 

@@ -1,4 +1,5 @@
 ---
+import Icon from "../components/Icon";
 import ServiceCard from "../components/ServiceCard.astro";
 import Layout from "../layouts/Layout.astro";
 
@@ -123,7 +124,9 @@ try {
     <div
       class="bg-surface/40 border border-surface/50 p-4 rounded-xl flex flex-col gap-2"
     >
-      <span class="text-2xl">⏳</span>
+      <span class="text-2xl">
+        <Icon name="solar:clock-square-bold" />
+      </span>
       <h3 class="font-bold text-white text-sm">Reserva en Segundos</h3>
       <p class="text-secondary text-xs leading-relaxed">
         Agenda tu cita en tiempo real desde tu celular en 1 minuto.
@@ -132,7 +135,9 @@ try {
     <div
       class="bg-surface/40 border border-surface/50 p-4 rounded-xl flex flex-col gap-2"
     >
-      <span class="text-2xl">🏆</span>
+      <span class="text-2xl">
+        <Icon name="guidance:hairdresser" />
+      </span>
       <h3 class="font-bold text-white text-sm">Barberos Expertos</h3>
       <p class="text-secondary text-xs leading-relaxed">
         Nuestro equipo cuenta con años de experiencia en estilo clásico.
@@ -165,7 +170,7 @@ try {
         barbers.length > 0 ? (
           barbers.map((barber) => (
             <div class="bg-surface/30 border border-surface/40 p-4 rounded-xl text-center flex flex-col items-center">
-              <div class="w-16 h-16 rounded-full bg-accent/10 border-2 border-accent flex items-center justify-center text-2xl mb-3">
+              <div class="w-16 h-16 rounded-full bg-accent/10 border-2 border-accent/20 flex items-center justify-center text-2xl mb-3">
                 🧔
               </div>
               <h3 class="font-bold text-white text-sm">{barber.name}</h3>
@@ -186,6 +191,7 @@ try {
     </div>
   </section>
   <script>
+    import "@iconify/iconify";
     let observer: any;
 
     function initAnimations() {
@@ -201,8 +207,8 @@ try {
         },
         { threshold: 0.15 },
       );
-      document.querySelectorAll(".service-card").forEach((card) => {
-        observer.observe(card);
+      document.querySelectorAll(".service-card, .icon-swing").forEach((el) => {
+        observer.observe(el);
       });
     }
 
