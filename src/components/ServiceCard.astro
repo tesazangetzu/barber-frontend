@@ -1,9 +1,11 @@
 ---
+import Link from "./Link.astro";
+
 const { service } = Astro.props;
 ---
 
 <div
-  class="bg-surface/30 border border-surface/40 p-4 rounded-xl flex justify-between items-center gap-4 hover:border-accent/30 transition-colors"
+  class="bg-surface/30 border border-surface/40 p-4 rounded-xl flex justify-between items-center gap-4 hover:border-(--byzantine-gold)/30 animate-slide-in [animation-play-state:paused] service-card"
 >
   <div class="grow">
     <h3 class="font-bold text-white text-sm mb-1">{service.name}</h3>
@@ -20,11 +22,10 @@ const { service } = Astro.props;
     <span class="text-accent font-bold font-serif text-lg">
       S/ {Number(service.price).toFixed(2)}
     </span>
-    <a
-      href="/booking"
-      class="mt-2 text-xs font-bold text-surface bg-accent px-3 py-1.5 rounded-lg hover:bg-accent/90 transition-colors"
-    >
-      Reservar
-    </a>
+    <Link
+      href={`/booking?service=${service.id}`}
+      text="Reservar"
+      nClass="px-5 py-2"
+    />
   </div>
 </div>

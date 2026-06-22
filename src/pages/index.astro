@@ -152,7 +152,7 @@ try {
       >
     </div>
 
-    <div class="flex flex-col gap-3">
+    <div class="flex flex-col gap-3 services-list">
       {services.map((service: IService) => <ServiceCard service={service} />)}
     </div>
   </section>
@@ -185,4 +185,27 @@ try {
       }
     </div>
   </section>
+  <script>
+    let observer: any;
+
+    function initAnimations() {
+      if (observer) observer.disconnect();
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+      document.querySelectorAll(".service-card").forEach((card) => {
+        observer.observe(card);
+      });
+    }
+
+    document.addEventListener("astro:page-load", initAnimations);
+  </script>
 </Layout>
