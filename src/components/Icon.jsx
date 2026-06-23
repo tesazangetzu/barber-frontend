@@ -4,7 +4,7 @@ export default function Icon({ name, className = "" }) {
   return (
     <iconify-icon
       icon={name}
-      class={`animate-swing icon-swing text-accent ${className}`}
+      class={`animate-swing icon-swing text-accent -mb-0.5 ${className}`}
     ></iconify-icon>
   );
 }

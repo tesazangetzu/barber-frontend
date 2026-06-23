@@ -1,4 +1,5 @@
 import Button from "../../Button";
+import Icon from "../../Icon";
 
 function ServiceCard({ service, selected, onSelect }) {
   return (
@@ -16,12 +17,13 @@ function ServiceCard({ service, selected, onSelect }) {
           {service.description}
         </p>
         <span className="inline-flex items-center text-[10px] text-secondary bg-surface px-2 py-0.5 rounded">
-          🕒 {service.duration_minutes} min
+          <Icon name="prime:clock" className="mr-1" />{" "}
+          {service.duration_minutes} min
         </span>
       </div>
       <div className="shrink-0 text-right">
         <span className="text-accent font-bold font-serif text-lg">
-          $ {Number(service.price).toFixed(2)}
+          S/ {Number(service.price).toFixed(2)}
         </span>
       </div>
     </div>

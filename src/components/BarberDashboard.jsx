@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PaymentModal from "./modals/PaymentModal";
 import OnlinePaymentInfoModal from "./modals/OnlinePaymentInfoModal";
 import EditServiceModal from "./modals/EditServiceModal";
+import Icon from "./Icon";
 
 const API_BASE = import.meta.env.PUBLIC_API_BASE;
 
@@ -440,7 +441,8 @@ export default function BarberDashboard() {
                 <div className="flex justify-between items-start mb-3 border-b border-surface/60 pb-2">
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-bold text-white font-mono">
-                      ⏰ {formatTime(app.start_time)}
+                      <Icon name="lets-icons:clock-fill" className="mr-0.5" />{" "}
+                      {formatTime(app.start_time)}
                     </span>
                     <span className="text-[9px] text-secondary bg-surface px-1.5 py-0.5 rounded font-mono">
                       #{app.id}
@@ -490,14 +492,19 @@ export default function BarberDashboard() {
                           }
                           className="grow py-2 rounded-xl bg-accent text-surface font-bold text-xs hover:bg-accent/90 transition-colors"
                         >
-                          Iniciar Servicio 💈
+                          Iniciar{" "}
+                          <Icon name="fe:play" className="ml-0.5 text-white" />
                         </button>
                         <button
                           onClick={() => openEditServiceModal(app)}
                           className="py-2 px-3 rounded-xl border border-surface hover:bg-surface text-[11px] font-bold text-secondary hover:text-white transition-colors shrink-0"
                           title="Editar Servicio"
                         >
-                          ✏️ Editar
+                          <Icon
+                            name="si:edit-detailed-fill"
+                            className="mr-0.5"
+                          />{" "}
+                          Editar
                         </button>
                       </>
                     )}
@@ -506,7 +513,7 @@ export default function BarberDashboard() {
                         onClick={() => handleStatusChange(app.id, "COMPLETED")}
                         className="grow py-2 rounded-xl bg-success text-white font-bold text-xs hover:bg-success/90 transition-colors"
                       >
-                        Finalizar Servicio ✅
+                        Finalizar <Icon name="mdi:check" className="ml-0.5" />
                       </button>
                     )}
                     {app.payment_status === "PENDING" && (
@@ -522,7 +529,7 @@ export default function BarberDashboard() {
                       className="p-2 rounded-xl border border-surface text-secondary hover:text-error hover:border-error/10 transition-colors"
                       title="Cancelar Cita"
                     >
-                      🗑️
+                      <Icon name="mdi:trash" className="text-red-500" />
                     </button>
                   </div>
                 )}

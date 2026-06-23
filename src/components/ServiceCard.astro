@@ -1,11 +1,12 @@
 ---
+import Icon from "./Icon";
 import Link from "./Link.astro";
 
 const { service } = Astro.props;
 ---
 
 <div
-  class="bg-surface/30 border border-surface/40 p-4 rounded-xl flex justify-between items-center gap-4 hover:border-(--byzantine-gold)/30 animate-slide-in [animation-play-state:paused] service-card"
+  class="bg-surface/30 border border-surface/40 p-4 rounded-xl flex justify-between items-center gap-4 hover:border-(--byzantine-gold)/30 animate-slide-in [animation-play-state:paused] service-card shadow-service"
 >
   <div class="grow">
     <h3 class="font-bold text-white text-sm mb-1">{service.name}</h3>
@@ -15,7 +16,8 @@ const { service } = Astro.props;
     <span
       class="inline-flex items-center text-[10px] text-secondary bg-surface px-2 py-0.5 rounded border border-surface"
     >
-      🕒 {service.duration_minutes} min
+      <Icon name="prime:clock" className="mr-1" />
+      {service.duration_minutes} min
     </span>
   </div>
   <div class="flex flex-col items-end shrink-0">

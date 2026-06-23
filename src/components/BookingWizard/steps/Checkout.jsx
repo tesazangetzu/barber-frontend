@@ -134,7 +134,7 @@ export function Checkout({
           <div className="flex justify-between text-xs border-t border-surface/50 pt-2 mt-1">
             <span className="font-bold text-white">Total a pagar:</span>
             <span className="font-bold text-accent font-serif text-sm">
-              $ {Number(selectedService.price).toFixed(2)}
+              S/ {Number(selectedService.price).toFixed(2)}
             </span>
           </div>
         </div>

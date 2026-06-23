@@ -1,4 +1,5 @@
 import CustomLink from "../../CustomLink";
+import Icon from "../../Icon";
 
 export function Success({
   appointment,
@@ -9,7 +10,7 @@ export function Success({
   return (
     <div className="text-center py-6">
       <div className="w-16 h-16 rounded-full bg-success/10 border border-success flex items-center justify-center text-3xl mx-auto mb-4 animate-bounce">
-        🎉
+        <Icon name="mingcute:celebrate-fill" />
       </div>
       <h2 className="text-xl font-serif font-bold text-white mb-1">
         ¡Cita Confirmada!
@@ -82,7 +83,7 @@ export function Success({
               </span>
             </div>
             <span className="text-accent font-bold font-serif text-lg">
-              $ {Number(appointment.service?.price).toFixed(2)}
+              S/ {Number(appointment.service?.price).toFixed(2)}
             </span>
           </div>
         </div>
