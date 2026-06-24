@@ -58,15 +58,10 @@
 
 @layer base {
   body {
-    background-color: var(--bg);
-    color: var(--text-primary);
+    background-color: var(--color-bg);
+    color: var(--color-primary);
     font-family: "Outfit", sans-serif;
     -webkit-font-smoothing: antialiased;
-  }
-
-  ::selection {
-    background-color: var(--accent);
-    color: #121212;
   }
 }
 
