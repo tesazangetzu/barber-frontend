@@ -1,0 +1,259 @@
+import React, { useEffect, useState, useMemo } from "react";
+import DataTable from "./DataTable";
+import { getAppointments, getBarbers } from "../../lib/api";
+import { formatCurrency } from "../../lib/utils";
+
+const statusConfig = {
+  PENDING_PAYMENT: { label: "Pendiente Pago", classes: "bg-yellow-100 text-yellow-800" },
+  CONFIRMED: { label: "Confirmado", classes: "bg-blue-100 text-blue-800" },
+  IN_PROGRESS: { label: "En Progreso", classes: "bg-purple-100 text-purple-800" },
+  COMPLETED: { label: "Completado", classes: "bg-green-100 text-green-800" },
+  CANCELLED: { label: "Cancelado", classes: "bg-red-100 text-red-800" },
+};
+
+export default function AppointmentsContent() {
+  const [appointments, setAppointments] = useState([]);
+  const [barbers, setBarbers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [barberFilter, setBarberFilter] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const [appts, barbersData] = await Promise.all([
+          getAppointments(),
+          getBarbers(),
+        ]);
+        setAppointments(Array.isArray(appts) ? appts : []);
+        setBarbers(Array.isArray(barbersData) ? barbersData : []);
+      } catch (error) {
+        console.error("Error loading data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  const filtered = useMemo(() => {
+    let result = appointments;
+
+    if (searchTerm.trim()) {
+      const term = searchTerm.toLowerCase();
+      result = result.filter(
+        (a) =>
+          a.client_name?.toLowerCase().includes(term) ||
+          a.client_phone?.toLowerCase().includes(term) ||
+          a.client_email?.toLowerCase().includes(term)
+      );
+    }
+
+    if (statusFilter) {
+      result = result.filter((a) => a.status === statusFilter);
+    }
+
+    if (barberFilter) {
+      result = result.filter((a) => a.barber?.id === Number(barberFilter));
+    }
+
+    return result;
+  }, [appointments, searchTerm, statusFilter, barberFilter]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
+
+  const paginated = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    return filtered.slice(start, start + itemsPerPage);
+  }, [filtered, currentPage, itemsPerPage]);
+
+  useEffect(() => {
+    if (currentPage > totalPages) setCurrentPage(1);
+  }, [currentPage, totalPages]);
+
+  const formatDate = (iso) => {
+    const d = new Date(iso);
+    return d.toLocaleDateString("es-ES", {
+      day: "2-digit", month: "2-digit", year: "numeric",
+    });
+  };
+
+  const formatTime = (iso) => {
+    const d = new Date(iso);
+    const h = (d.getUTCHours() - 5 + 24) % 24;
+    const m = String(d.getUTCMinutes()).padStart(2, "0");
+    return `${String(h).padStart(2, "0")}:${m}`;
+  };
+
+  const columns = [
+    { key: "id", label: "#", sortable: true },
+    { key: "client_name", label: "Cliente", sortable: true },
+    { key: "barber", label: "Barbero", render: (v) => v?.name || "-" },
+    { key: "service", label: "Servicio", render: (v) => v?.name || "-" },
+    { key: "start_time", label: "Fecha", sortable: true, render: (v) => formatDate(v) },
+    { key: "_time", label: "Hora", render: (_, row) => formatTime(row.start_time) },
+    {
+      key: "status",
+      label: "Estado",
+      render: (v) => {
+        const cfg = statusConfig[v] || { label: v, classes: "bg-gray-100 text-gray-800" };
+        return (
+          <span className={`px-2 py-1 rounded text-xs font-semibold ${cfg.classes}`}>
+            {cfg.label}
+          </span>
+        );
+      },
+    },
+    {
+      key: "payment_status",
+      label: "Pago",
+      render: (v) => (
+        <span className={`px-2 py-1 rounded text-xs font-semibold ${
+          v === "PAID" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"
+        }`}>
+          {v === "PAID" ? "Pagado" : "Pendiente"}
+        </span>
+      ),
+    },
+    { key: "service", label: "Precio", render: (v) => (v?.price ? formatCurrency(v.price) : "-") },
+  ];
+
+  const from = filtered.length === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
+  const to = Math.min(currentPage * itemsPerPage, filtered.length);
+
+  const pagStart = Math.max(1, currentPage - 2);
+  const pagEnd = Math.min(totalPages, currentPage + 2);
+  const pageNumbers = [];
+  for (let i = pagStart; i <= pagEnd; i++) pageNumbers.push(i);
+
+  return (
+    <div>
+      <h1 className="text-3xl font-bold text-gray-800 mb-8">Gestión de Citas</h1>
+
+      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Buscar</label>
+            <input
+              type="text"
+              placeholder="Nombre, teléfono o email..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            >
+              <option value="">Todos</option>
+              {Object.entries(statusConfig).map(([key, cfg]) => (
+                <option key={key} value={key}>{cfg.label}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Barbero</label>
+            <select
+              value={barberFilter}
+              onChange={(e) => setBarberFilter(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            >
+              <option value="">Todos</option>
+              {barbers.map((b) => (
+                <option key={b.id} value={b.id}>{b.name}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Por página</label>
+            <select
+              value={itemsPerPage}
+              onChange={(e) => setItemsPerPage(Number(e.target.value))}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            >
+              {[10, 25, 50, 100].map((n) => (
+                <option key={n} value={n}>{n}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <DataTable
+        title="Todas las Citas"
+        columns={columns}
+        data={paginated}
+        loading={loading}
+      />
+
+      {totalPages > 1 && (
+        <div className="bg-white rounded-b-lg shadow-md px-4 py-3 border-t border-gray-200 flex items-center justify-between">
+          <span className="text-sm text-gray-600">
+            Mostrando {from}–{to} de {filtered.length} resultado{filtered.length !== 1 ? "s" : ""}
+            {filtered.length !== appointments.length && ` (filtrados de ${appointments.length})`}
+          </span>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-1.5 rounded text-sm font-medium border border-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+            >
+              Anterior
+            </button>
+            {pagStart > 1 && (
+              <>
+                <button
+                  onClick={() => setCurrentPage(1)}
+                  className="px-3 py-1.5 rounded text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
+                >
+                  1
+                </button>
+                {pagStart > 2 && <span className="px-1 text-gray-400">···</span>}
+              </>
+            )}
+            {pageNumbers.map((p) => (
+              <button
+                key={p}
+                onClick={() => setCurrentPage(p)}
+                className={`px-3 py-1.5 rounded text-sm font-medium border transition-colors ${
+                  p === currentPage
+                    ? "bg-blue-600 text-white border-blue-600"
+                    : "border-gray-300 text-gray-700 hover:bg-gray-100"
+                }`}
+              >
+                {p}
+              </button>
+            ))}
+            {pagEnd < totalPages && (
+              <>
+                {pagEnd < totalPages - 1 && <span className="px-1 text-gray-400">···</span>}
+                <button
+                  onClick={() => setCurrentPage(totalPages)}
+                  className="px-3 py-1.5 rounded text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
+                >
+                  {totalPages}
+                </button>
+              </>
+            )}
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="px-3 py-1.5 rounded text-sm font-medium border border-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+            >
+              Siguiente
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

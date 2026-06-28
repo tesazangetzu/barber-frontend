@@ -32,7 +32,7 @@ export function TextInput({
         value={value}
         onChange={onChange}
         required={required}
-        className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+        className={`w-full px-4 py-2 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-100 disabled:text-gray-500 disabled:bg-gray-100 ${
           error ? "border-red-500" : "border-gray-300"
         }`}
         {...props}
@@ -57,7 +57,7 @@ export function SelectInput({
         value={value}
         onChange={onChange}
         required={required}
-        className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+        className={`w-full px-4 py-2 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-100 disabled:text-gray-500 disabled:bg-gray-100 ${
           error ? "border-red-500" : "border-gray-300"
         }`}
         {...props}
@@ -91,7 +91,7 @@ export function TextArea({
         onChange={onChange}
         required={required}
         rows={rows}
-        className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-vertical ${
+        className={`w-full px-4 py-2 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-vertical disabled:opacity-100 disabled:text-gray-500 disabled:bg-gray-100 ${
           error ? "border-red-500" : "border-gray-300"
         }`}
         {...props}
@@ -121,7 +121,7 @@ export function NumberInput({
         required={required}
         step={step}
         min={min}
-        className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+        className={`w-full px-4 py-2 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-100 disabled:text-gray-500 disabled:bg-gray-100 ${
           error ? "border-red-500" : "border-gray-300"
         }`}
         {...props}

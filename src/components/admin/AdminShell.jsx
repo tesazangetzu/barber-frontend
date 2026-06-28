@@ -5,6 +5,7 @@ import DashboardContent from "./DashboardContent.jsx";
 import BarbersContent from "./BarbersContent.jsx";
 import ServicesContent from "./ServicesContent.jsx";
 import SchedulesContent from "./SchedulesContent.jsx";
+import AppointmentsContent from "./AppointmentsContent.jsx";
 
 const routes = {
   dashboard: {
@@ -22,6 +23,10 @@ const routes = {
   schedules: {
     title: "Gestión de Horarios",
     component: SchedulesContent,
+  },
+  appointments: {
+    title: "Gestión de Citas",
+    component: AppointmentsContent,
   },
 };
 
@@ -70,7 +75,7 @@ export default function AdminShell() {
     routes[activeRoute]?.component || routes.dashboard.component;
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen md:pl-64">
       {/* Mobile header with hamburger */}
       <div className="md:hidden bg-blue-900 text-white p-4 flex items-center justify-between fixed top-0 left-0 right-0 z-40">
         <h1 className="text-lg font-bold">Panel Admin</h1>
@@ -93,7 +98,7 @@ export default function AdminShell() {
 
       {/* Sidebar */}
       <div
-        className={`fixed md:relative md:shrink-0 top-16 md:top-0 left-0 h-screen md:h-auto w-64 transform transition-transform duration-300 ease-in-out md:translate-x-0 z-30 ${
+        className={`fixed md:shrink-0 top-16 md:top-0 left-0 h-screen w-64 transform transition-transform duration-300 ease-in-out md:translate-x-0 z-30 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

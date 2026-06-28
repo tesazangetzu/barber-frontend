@@ -1,10 +1,11 @@
 import React from "react";
-import { Calendar, Users, Scissors, BarChart3, LogOut } from "lucide-react";
+import { Calendar, Users, Scissors, BarChart3, LogOut, CalendarCheck } from "lucide-react";
 
 const navItems = [
   { key: "dashboard", label: "Dashboard", icon: BarChart3 },
   { key: "barbers", label: "Barberos", icon: Users },
   { key: "services", label: "Servicios", icon: Scissors },
+  { key: "appointments", label: "Citas", icon: CalendarCheck },
   { key: "schedules", label: "Horarios", icon: Calendar },
 ];
 
@@ -54,7 +55,7 @@ export default function AdminSidebar({ activeRoute, onNavigate }) {
         <button
           type="button"
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-600 transition-colors duration-200 text-red-100 hover:text-white"
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-600 transition-colors duration-200 text-red-100 hover:text-white cursor-pointer"
         >
           <LogOut size={20} />
           <span>Cerrar Sesión</span>

@@ -99,13 +99,13 @@ export function RevenueChart({ data }) {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
-          <Tooltip formatter={(value) => `$${value}`} />
+          <Tooltip formatter={(value) => `S/${value.toFixed(2)}`} />
           <Legend />
           <Line
             type="monotone"
             dataKey="revenue"
             stroke="#10b981"
-            name="Ingresos ($)"
+            name="Ingresos (S/)"
           />
         </LineChart>
       </ResponsiveContainer>

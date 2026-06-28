@@ -10,6 +10,7 @@ export default function DataTable({
   onDelete,
   loading = false,
 }) {
+  const hasActions = onEdit || onDelete;
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
   const handleSort = (key) => {
@@ -35,13 +36,15 @@ export default function DataTable({
     <div className="bg-white rounded-lg shadow-md">
       <div className="p-3 md:p-6 border-b border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-0">
         <h2 className="text-xl md:text-2xl font-bold text-gray-800">{title}</h2>
-        <button
-          onClick={onAdd}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 md:px-4 py-2 rounded-lg transition-colors duration-200 text-sm md:text-base w-full md:w-auto justify-center md:justify-start"
-        >
-          <Plus size={18} />
-          Nuevo
-        </button>
+        {onAdd && (
+          <button
+            onClick={onAdd}
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 md:px-4 py-2 rounded-lg transition-colors duration-200 text-sm md:text-base w-full md:w-auto justify-center md:justify-start"
+          >
+            <Plus size={18} />
+            Nuevo
+          </button>
+        )}
       </div>
 
       <div className="overflow-x-auto">
@@ -66,16 +69,18 @@ export default function DataTable({
                   </div>
                 </th>
               ))}
-              <th className="px-6 py-3 text-left text-gray-700 font-semibold">
-                Acciones
-              </th>
+              {hasActions && (
+                <th className="px-6 py-3 text-left text-gray-700 font-semibold">
+                  Acciones
+                </th>
+              )}
             </tr>
           </thead>
           <tbody>
             {loading ? (
               <tr>
                 <td
-                  colSpan={columns.length + 1}
+                  colSpan={columns.length + (hasActions ? 1 : 0)}
                   className="px-6 py-4 text-center text-gray-500"
                 >
                   Cargando...
@@ -84,7 +89,7 @@ export default function DataTable({
             ) : data.length === 0 ? (
               <tr>
                 <td
-                  colSpan={columns.length + 1}
+                  colSpan={columns.length + (hasActions ? 1 : 0)}
                   className="px-6 py-4 text-center text-gray-500"
                 >
                   No hay datos
@@ -103,24 +108,30 @@ export default function DataTable({
                         : row[col.key]}
                     </td>
                   ))}
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => onEdit(row)}
-                        className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors duration-200"
-                        title="Editar"
-                      >
-                        <Edit2 size={18} />
-                      </button>
-                      <button
-                        onClick={() => onDelete(row.id)}
-                        className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors duration-200"
-                        title="Eliminar"
-                      >
-                        <Trash2 size={18} />
-                      </button>
-                    </div>
-                  </td>
+                  {hasActions && (
+                    <td className="px-6 py-4">
+                      <div className="flex gap-2">
+                        {onEdit && (
+                          <button
+                            onClick={() => onEdit(row)}
+                            className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors duration-200"
+                            title="Editar"
+                          >
+                            <Edit2 size={18} />
+                          </button>
+                        )}
+                        {onDelete && (
+                          <button
+                            onClick={() => onDelete(row.id)}
+                            className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors duration-200"
+                            title="Eliminar"
+                          >
+                            <Trash2 size={18} />
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  )}
                 </tr>
               ))
             )}
