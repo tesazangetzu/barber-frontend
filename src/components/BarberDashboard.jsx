@@ -3,6 +3,7 @@ import PaymentModal from "./modals/PaymentModal";
 import OnlinePaymentInfoModal from "./modals/OnlinePaymentInfoModal";
 import EditServiceModal from "./modals/EditServiceModal";
 import Icon from "./Icon";
+import { formatoHoraCita } from "../lib/date-utils";
 
 const API_BASE = import.meta.env.PUBLIC_API_BASE;
 
@@ -271,13 +272,6 @@ export default function BarberDashboard() {
     );
   }
 
-  const formatTime = (isoString) => {
-    const d = new Date(isoString);
-    const limaHours = (d.getUTCHours() - 5 + 24) % 24;
-    const mins = String(d.getUTCMinutes()).padStart(2, "0");
-    return `${String(limaHours).padStart(2, "0")}:${mins}`;
-  };
-
   const getStatusBadge = (status) => {
     switch (status) {
       case "PENDING_PAYMENT":
@@ -442,7 +436,7 @@ export default function BarberDashboard() {
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-bold text-white font-mono">
                       <Icon name="lets-icons:clock-fill" className="mr-0.5" />{" "}
-                      {formatTime(app.start_time)}
+                      {formatoHoraCita(app.start_time)}
                     </span>
                     <span className="text-[9px] text-secondary bg-surface px-1.5 py-0.5 rounded font-mono">
                       #{app.id}

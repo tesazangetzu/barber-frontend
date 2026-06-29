@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import DataTable from "./DataTable";
 import { getAppointments, getBarbers } from "../../lib/api";
 import { formatCurrency } from "../../lib/utils";
+import { formatoHoraCita, formatoFechaCita } from "../../lib/date-utils";
 
 const statusConfig = {
   PENDING_PAYMENT: { label: "Pendiente Pago", classes: "bg-yellow-100 text-yellow-800" },
@@ -76,27 +77,13 @@ export default function AppointmentsContent() {
     if (currentPage > totalPages) setCurrentPage(1);
   }, [currentPage, totalPages]);
 
-  const formatDate = (iso) => {
-    const d = new Date(iso);
-    return d.toLocaleDateString("es-ES", {
-      day: "2-digit", month: "2-digit", year: "numeric",
-    });
-  };
-
-  const formatTime = (iso) => {
-    const d = new Date(iso);
-    const h = (d.getUTCHours() - 5 + 24) % 24;
-    const m = String(d.getUTCMinutes()).padStart(2, "0");
-    return `${String(h).padStart(2, "0")}:${m}`;
-  };
-
   const columns = [
     { key: "id", label: "#", sortable: true },
     { key: "client_name", label: "Cliente", sortable: true },
     { key: "barber", label: "Barbero", render: (v) => v?.name || "-" },
     { key: "service", label: "Servicio", render: (v) => v?.name || "-" },
-    { key: "start_time", label: "Fecha", sortable: true, render: (v) => formatDate(v) },
-    { key: "_time", label: "Hora", render: (_, row) => formatTime(row.start_time) },
+    { key: "start_time", label: "Fecha", sortable: true, render: (v) => formatoFechaCita(v) },
+    { key: "_time", label: "Hora", render: (_, row) => formatoHoraCita(row.start_time) },
     {
       key: "status",
       label: "Estado",

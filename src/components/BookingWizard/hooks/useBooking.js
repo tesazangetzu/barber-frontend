@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { agregarOffsetLima } from "../../../lib/date-utils";
 
 const API_BASE = import.meta.env.PUBLIC_API_BASE;
 const STEPS = ["service", "barber", "date", "payment", "success"];
@@ -117,7 +118,7 @@ export function useBooking() {
       setLoading(true);
       setError("");
 
-      const isoStartTime = `${selectedDate}T${selectedSlot}:00`;
+      const isoStartTime = agregarOffsetLima(selectedDate, selectedSlot);
 
       const appointmentPayload = {
         barber_id: selectedBarber.id,

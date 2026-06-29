@@ -1,3 +1,5 @@
+import { formatoHoraCita } from "../lib/date-utils";
+
 export default function AppointmentCard({
   app,
   onStatusChange,
@@ -50,14 +52,6 @@ export default function AppointmentCard({
     );
   };
 
-  const formatTime = (timeString) => {
-    if (!timeString) return "-";
-    const d = new Date(timeString);
-    const limaHours = (d.getUTCHours() - 5 + 24) % 24;
-    const mins = String(d.getUTCMinutes()).padStart(2, "0");
-    return `${String(limaHours).padStart(2, "0")}:${mins}`;
-  };
-
   return (
     <div
       className={`p-4 rounded-2xl border transition-all ${
@@ -71,7 +65,7 @@ export default function AppointmentCard({
       <div className="flex justify-between items-start mb-3 border-b border-surface/60 pb-2">
         <div className="flex items-center gap-2">
           <span className="text-sm font-bold text-white font-mono">
-            ⏰ {formatTime(app.start_time)}
+            ⏰ {formatoHoraCita(app.start_time)}
           </span>
           <span className="text-[9px] text-secondary bg-surface px-1.5 py-0.5 rounded font-mono">
             #{app.id}
