@@ -21,27 +21,30 @@ function splitSlots(slots) {
 function getNext7Days() {
   const days = [];
   const weekdays = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"];
-  const fmt = new Intl.DateTimeFormat("en-CA", {
+  const fmtDate = new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Lima",
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
   });
+  const fmtDow = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Lima",
+    weekday: "short",
+  });
+  const dayMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
 
   for (let i = 0; i < 7; i++) {
     const d = new Date();
     d.setDate(d.getDate() + i);
 
-    const dateStr = fmt.format(d);
-    const limaNoon = new Date(`${dateStr}T12:00:00-05:00`);
-    const dayOfWeek = limaNoon.getUTCDay();
-
-    if (dayOfWeek === 0) continue;
+    const dateStr = fmtDate.format(d);
+    const dowIdx = dayMap[fmtDow.format(d)];
+    if (dowIdx === 0) continue;
 
     days.push({
       dateStr,
-      dayNum: limaNoon.getUTCDate(),
-      dayName: weekdays[dayOfWeek],
+      dayNum: parseInt(dateStr.slice(8, 10), 10),
+      dayName: weekdays[dowIdx],
     });
   }
 
