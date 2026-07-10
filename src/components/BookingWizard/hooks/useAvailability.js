@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 
 const API_BASE = import.meta.env.PUBLIC_API_BASE;
 
-export function useAvailability(selectedBarber, selectedDate) {
+export function useAvailability(selectedBarber, selectedDate, selectedService) {
   const [availableSlots, setAvailableSlots] = useState([]);
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [slotsError, setSlotsError] = useState("");
@@ -22,8 +22,16 @@ export function useAvailability(selectedBarber, selectedDate) {
     setSlotsError("");
 
     try {
+      const params = new URLSearchParams({
+        barberId: selectedBarber.id,
+        date: selectedDate,
+      });
+      if (selectedService?.id) {
+        params.append('serviceId', selectedService.id);
+      }
+
       const res = await fetch(
-        `${API_BASE}/appointments/available?barberId=${selectedBarber.id}&date=${selectedDate}`,
+        `${API_BASE}/appointments/available?${params.toString()}`,
         { signal: controller.signal },
       );
 
@@ -42,7 +50,7 @@ export function useAvailability(selectedBarber, selectedDate) {
     } finally {
       if (!controller.signal.aborted) setSlotsLoading(false);
     }
-  }, [selectedBarber, selectedDate]);
+  }, [selectedBarber, selectedDate, selectedService]);
 
   useEffect(() => {
     fetchSlots();

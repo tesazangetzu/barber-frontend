@@ -1,8 +1,7 @@
-const LIMA_OFFSET = '-05:00';
-
 export function formatoHoraCita(isoString) {
   if (!isoString) return '-';
-  return isoString.substring(11, 16);
+  const m = isoString.match(/T(\d{2}:\d{2})/);
+  return m ? m[1] : isoString.substring(11, 16);
 }
 
 export function formatoFechaCita(isoString) {
@@ -12,5 +11,5 @@ export function formatoFechaCita(isoString) {
 }
 
 export function agregarOffsetLima(fecha, hora) {
-  return `${fecha}T${hora}:00${LIMA_OFFSET}`;
+  return `${fecha}T${hora}:00-05:00`;
 }

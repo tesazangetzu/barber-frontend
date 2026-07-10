@@ -18,6 +18,7 @@ export default function BookingWizard() {
   const { availableSlots, slotsLoading, slotsError } = useAvailability(
     booking.selectedBarber,
     booking.selectedDate,
+    booking.selectedService,
   );
 
   const currentStepNum = STEP_NUMBERS[booking.step] || 1;

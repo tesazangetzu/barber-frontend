@@ -7,29 +7,23 @@
       "skillPath": "skills/astro/SKILL.md",
       "computedHash": "ebefe26b231d32379c14e41a46c2de7b4b0184543bedab7febdabe4fb21fba4e"
     },
-    "frontend-design": {
-      "source": "anthropics/skills",
+    "astro-framework": {
+      "source": "delineas/astro-framework-agents",
       "sourceType": "github",
-      "skillPath": "skills/frontend-design/SKILL.md",
-      "computedHash": "1608ea77fbb6fc30d13a97d12cfa8ebf31358d40f0dd97beed24829d6b3f45dd"
-    },
-    "ui-ux-pro-max": {
-      "source": "terminalskills/ui-ux-pro-max",
-      "sourceType": "agentskill",
-      "skillPath": "SKILL.md",
-      "computedHash": "a561784cead83daca5cf9009b57eab5bdc291712319d18e882bb68357b14a130"
-    },
-    "tailwind-design-system": {
-      "source": "sickn33/antigravity-awesome-skills",
-      "sourceType": "github",
-      "skillPath": "plugins/antigravity-awesome-skills-claude/skills/tailwind-design-system/SKILL.md",
-      "computedHash": "2d2852085d419997ec8a75d798666afe20ff265e99602fc4ad78e6353c0f3746"
+      "skillPath": "skills/astro-framework/SKILL.md",
+      "computedHash": "7d8940b3fb7dab50f8303afdb3210cc9385da3a8d243fe99efdc08ce53aed90c"
     },
     "design-taste-frontend": {
       "source": "leonxlnx/taste-skill",
       "sourceType": "github",
       "skillPath": "skills/taste-skill/SKILL.md",
       "computedHash": "aa194351b246b8b4799099d4ed7b033d29eab6e6e3d58d8d2172978be7b3ec89"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "1608ea77fbb6fc30d13a97d12cfa8ebf31358d40f0dd97beed24829d6b3f45dd"
     },
     "high-end-visual-design": {
       "source": "leonxlnx/taste-skill",
@@ -42,6 +36,18 @@
       "sourceType": "github",
       "skillPath": "skills/minimalist-skill/SKILL.md",
       "computedHash": "36bc7328f085405f43b476938e62460fa573bf7e984e949e072bcf014831a44c"
+    },
+    "tailwind-design-system": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/antigravity-awesome-skills-claude/skills/tailwind-design-system/SKILL.md",
+      "computedHash": "2d2852085d419997ec8a75d798666afe20ff265e99602fc4ad78e6353c0f3746"
+    },
+    "ui-ux-pro-max": {
+      "source": "terminalskills/ui-ux-pro-max",
+      "sourceType": "agentskill",
+      "skillPath": "SKILL.md",
+      "computedHash": "a561784cead83daca5cf9009b57eab5bdc291712319d18e882bb68357b14a130"
     }
   }
 }
