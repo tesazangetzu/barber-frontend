@@ -18,8 +18,6 @@ export function Checkout({
   onPrev,
   loading,
   error,
-  showOnlineModal,
-  onCloseOnlineModal,
 }) {
   return (
     <form onSubmit={onSubmit}>
@@ -75,10 +73,10 @@ export function Checkout({
           <label className="block text-[11px] font-semibold text-secondary uppercase tracking-wider mb-2">
             Método de Pago
           </label>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3">
             <div
               onClick={() => onPaymentMethodChange(PAYMENT_METHOD.LOCAL)}
-              className={`p-3 rounded-xl border cursor-pointer transition-all flex flex-col gap-1.5 ${
+              className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3 ${
                 paymentMethod === PAYMENT_METHOD.LOCAL
                   ? "bg-accent/10 border-accent"
                   : "bg-surface/30 border-surface/40 hover:border-surface/60"
@@ -88,23 +86,7 @@ export function Checkout({
               <div className="text-left">
                 <h4 className="text-xs font-bold text-white">Pago Local</h4>
                 <p className="text-[10px] text-secondary leading-tight">
-                  Paga al barbero con efectivo/tarjeta.
-                </p>
-              </div>
-            </div>
-            <div
-              onClick={() => onPaymentMethodChange(PAYMENT_METHOD.ONLINE)}
-              className={`p-3 rounded-xl border cursor-pointer transition-all flex flex-col gap-1.5 ${
-                paymentMethod === PAYMENT_METHOD.ONLINE
-                  ? "bg-accent/10 border-accent"
-                  : "bg-surface/30 border-surface/40 hover:border-surface/60"
-              }`}
-            >
-              <span className="text-xl">💳</span>
-              <div className="text-left">
-                <h4 className="text-xs font-bold text-white">Pago en Línea</h4>
-                <p className="text-[10px] text-accent/80 leading-tight font-medium">
-                  Prepago con MercadoPago.
+                  Paga al barbero con efectivo o tarjeta en el local.
                 </p>
               </div>
             </div>
@@ -139,33 +121,6 @@ export function Checkout({
           </div>
         </div>
       </div>
-
-      {showOnlineModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={onCloseOnlineModal}
-          />
-          <div className="relative max-w-sm w-full bg-surface/90 border border-surface/60 rounded-2xl p-6 shadow-xl">
-            <h3 className="text-lg font-bold text-white mb-2">
-              Pago en Línea - Próximamente
-            </h3>
-            <p className="text-xs text-secondary mb-4">
-              Estamos trabajando para habilitar pagos en línea (MercadoPago).
-              Por ahora solo está disponible el pago en la barbería.
-            </p>
-            <div className="flex justify-end">
-              <button
-                type="button"
-                onClick={onCloseOnlineModal}
-                className="px-4 py-2 rounded-lg bg-accent text-surface font-bold hover:bg-accent/90 transition-colors"
-              >
-                Entendido
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       <div className="flex gap-3 mt-6">
         <Button

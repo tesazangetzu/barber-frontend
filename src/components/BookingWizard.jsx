@@ -114,8 +114,6 @@ export default function BookingWizard() {
           onPrev={booking.prevStep}
           loading={booking.loading}
           error={booking.error}
-          showOnlineModal={booking.showOnlineModal}
-          onCloseOnlineModal={booking.handleCloseOnlineModal}
         />
       )}
 

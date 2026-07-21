@@ -10,7 +10,7 @@ export function useBooking() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [appointment, setAppointment] = useState(null);
-  const [showOnlineModal, setShowOnlineModal] = useState(false);
+
 
   const [selectedService, setSelectedService] = useState(null);
   const [selectedBarber, setSelectedBarber] = useState(null);
@@ -91,19 +91,6 @@ export function useBooking() {
     },
     [highlightAndScroll],
   );
-
-  const handlePaymentMethodChange = useCallback((method) => {
-    if (method === PAYMENT_METHOD.ONLINE) {
-      setShowOnlineModal(true);
-    } else {
-      setPaymentMethod(method);
-    }
-  }, []);
-
-  const handleCloseOnlineModal = useCallback(() => {
-    setShowOnlineModal(false);
-    setPaymentMethod(PAYMENT_METHOD.LOCAL);
-  }, []);
 
   const handleSubmit = useCallback(
     async (e) => {
@@ -195,7 +182,6 @@ export function useBooking() {
     canProceed,
     appointment,
     highlightAndScroll,
-    showOnlineModal,
     selectedService,
     setSelectedService,
     selectedBarber,
@@ -205,7 +191,7 @@ export function useBooking() {
     selectedSlot,
     setSelectedSlot: handleSlotChange,
     paymentMethod,
-    setPaymentMethod: handlePaymentMethodChange,
+    setPaymentMethod,
     clientName,
     setClientName,
     clientPhone,
@@ -215,6 +201,5 @@ export function useBooking() {
     submitting,
     handleSubmit,
     PAYMENT_METHOD,
-    handleCloseOnlineModal,
   };
 }
