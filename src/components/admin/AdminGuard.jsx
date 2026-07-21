@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
 
+function isTokenExpired(token) {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return payload.exp * 1000 < Date.now();
+  } catch {
+    return true;
+  }
+}
+
 export default function AdminGuard({ children }) {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -15,15 +24,22 @@ export default function AdminGuard({ children }) {
 
       try {
         const admin = JSON.parse(adminData);
-        if (!admin.access_token || !admin.role || admin.role !== "admin") {
+        if (
+          !admin.access_token ||
+          !admin.role ||
+          admin.role !== "admin" ||
+          isTokenExpired(admin.access_token)
+        ) {
           localStorage.removeItem("admin");
+          localStorage.removeItem("barber");
           window.location.href = "/admin-login";
           return;
         }
 
         setIsAuthorized(true);
-      } catch (error) {
+      } catch {
         localStorage.removeItem("admin");
+        localStorage.removeItem("barber");
         window.location.href = "/admin-login";
       } finally {
         setIsLoading(false);
