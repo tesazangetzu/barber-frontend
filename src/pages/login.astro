@@ -99,7 +99,6 @@ const API_BASE = import.meta.env.PUBLIC_API_BASE;
     const loginUrl = new URL("/auth/login", API_BASE).toString();
 
     // Clear previous sessions
-    localStorage.removeItem("token");
     localStorage.removeItem("barber");
 
     function showAlert(message, type = "error") {

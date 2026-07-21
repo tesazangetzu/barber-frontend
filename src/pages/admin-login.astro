@@ -97,7 +97,6 @@ const API_BASE = import.meta.env.PUBLIC_API_BASE;
 
     const loginUrl = new URL("/auth/admin-login", API_BASE).toString();
 
-    localStorage.removeItem("token");
     localStorage.removeItem("barber");
     localStorage.removeItem("admin");
 
