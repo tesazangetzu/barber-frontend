@@ -82,7 +82,7 @@ export function SelectService({
         text="Continuar"
         disabled={!selectedService}
         onClick={onNext}
-        variant="filleable"
+        variant="primary"
       />
     </div>
   );

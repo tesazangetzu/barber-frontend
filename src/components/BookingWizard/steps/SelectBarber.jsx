@@ -66,13 +66,13 @@ export function SelectBarber({
 
       <div className="flex gap-3 mt-6">
         <Button nClass="w-full mt-6 py-3.5" text="Atrás" onClick={onPrev} />
-        <Button
-          nClass="w-full mt-6 py-3.5"
-          text="Continuar"
-          disabled={!selectedBarber}
-          onClick={onNext}
-          variant="filleable"
-        />
+          <Button
+            nClass="w-full mt-6 py-3.5"
+            text="Continuar"
+            disabled={!selectedBarber}
+            onClick={onNext}
+            variant="primary"
+          />
       </div>
     </div>
   );

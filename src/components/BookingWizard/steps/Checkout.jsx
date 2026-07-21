@@ -187,7 +187,7 @@ export function Checkout({
             )
           }
           disabled={loading}
-          variant="filleable"
+          variant="primary"
           type="submit"
         />
       </div>

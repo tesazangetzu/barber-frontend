@@ -180,7 +180,7 @@ export function SelectDate({
           text="Continuar"
           disabled={!selectedDate || !selectedSlot}
           onClick={onNext}
-          variant="filleable"
+          variant="primary"
         />
       </div>
     </div>

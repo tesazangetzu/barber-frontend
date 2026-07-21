@@ -6,7 +6,43 @@ import {
   AppointmentStatusChart,
 } from "./Charts";
 import { getBarbers, getServices, getAppointments } from "../../lib/api";
-import { generateChartData } from "../../lib/utils";
+
+function groupByDate(appointments, getValue) {
+  const map = {};
+  for (const apt of appointments) {
+    const date = apt.start_time ? apt.start_time.substring(0, 10) : "unknown";
+    if (!map[date]) map[date] = { count: 0, revenue: 0 };
+    map[date].count += 1;
+    map[date].revenue += Number(apt.service?.price) || 0;
+  }
+  return Object.entries(map)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .slice(-7)
+    .map(([name, val]) => ({
+      name,
+      count: val.count,
+      revenue: val.revenue,
+    }));
+}
+
+function countByStatus(appointments) {
+  const counts = {};
+  for (const apt of appointments) {
+    const status = apt.status || "UNKNOWN";
+    counts[status] = (counts[status] || 0) + 1;
+  }
+  const labels = {
+    COMPLETED: "Completadas",
+    CONFIRMED: "Confirmadas",
+    PENDING_PAYMENT: "Pendientes Pago",
+    IN_PROGRESS: "En Progreso",
+    CANCELLED: "Canceladas",
+  };
+  return Object.entries(counts).map(([key, value]) => ({
+    name: labels[key] || key,
+    count: value,
+  }));
+}
 
 export default function DashboardContent() {
   const [stats, setStats] = useState({
@@ -29,7 +65,6 @@ export default function DashboardContent() {
           [getBarbers(), getServices(), getAppointments()],
         );
 
-        // Calculate stats
         const totalRevenue = appointmentsData.reduce(
           (sum, apt) => sum + (Number(apt.service?.price) || 0),
           0,
@@ -42,28 +77,11 @@ export default function DashboardContent() {
           totalRevenue,
         });
 
-        // Generate chart data
-        const appointmentData = generateChartData(7);
-        const revenueData = generateChartData(7);
-        const statusData = [
-          {
-            name: "Completadas",
-            count: Math.floor(appointmentsData.length * 0.7),
-          },
-          {
-            name: "Pendientes",
-            count: Math.floor(appointmentsData.length * 0.2),
-          },
-          {
-            name: "Canceladas",
-            count: Math.floor(appointmentsData.length * 0.1),
-          },
-        ];
-
+        const grouped = groupByDate(appointmentsData);
         setChartData({
-          appointments: appointmentData,
-          revenue: revenueData,
-          status: statusData,
+          appointments: grouped.map(({ name, count }) => ({ name, count })),
+          revenue: grouped.map(({ name, revenue }) => ({ name, revenue })),
+          status: countByStatus(appointmentsData),
         });
       } catch (error) {
         console.error("Error loading dashboard data:", error);
