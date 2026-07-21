@@ -96,9 +96,9 @@ export default function DataTable({
                 </td>
               </tr>
             ) : (
-              sortedData.map((row, idx) => (
+              sortedData.map((row) => (
                 <tr
-                  key={idx}
+                  key={row.id ?? row[columns[0]?.key]}
                   className="border-b border-gray-200 hover:bg-gray-50 transition-colors duration-150"
                 >
                   {columns.map((col) => (

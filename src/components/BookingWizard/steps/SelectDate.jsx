@@ -18,6 +18,8 @@ function splitSlots(slots) {
   return { morning, afternoon };
 }
 
+const EXCLUDED_DAYS = [0]; // 0 = Domingo
+
 function getNext7Days() {
   const days = [];
   const weekdays = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"];
@@ -39,7 +41,7 @@ function getNext7Days() {
 
     const dateStr = fmtDate.format(d);
     const dowIdx = dayMap[fmtDow.format(d)];
-    if (dowIdx === 0) continue;
+    if (EXCLUDED_DAYS.includes(dowIdx)) continue;
 
     days.push({
       dateStr,

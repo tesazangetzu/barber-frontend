@@ -1,7 +1,17 @@
 export function formatoHoraCita(isoString) {
   if (!isoString) return '-';
   const m = isoString.match(/T(\d{2}:\d{2})/);
-  return m ? m[1] : isoString.substring(11, 16);
+  if (m) return m[1];
+  try {
+    return new Date(isoString).toLocaleTimeString("es-PE", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+      timeZone: "America/Lima",
+    });
+  } catch {
+    return isoString.substring(11, 16);
+  }
 }
 
 export function formatoFechaCita(isoString) {
