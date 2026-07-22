@@ -53,6 +53,31 @@ function getNext7Days() {
   return days;
 }
 
+function isSlotPast(selectedDate, slotTime) {
+  const now = new Date();
+  const limaParts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Lima",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(now);
+
+  const getPart = (type) => limaParts.find((p) => p.type === type)?.value;
+
+  const todayStr = `${getPart("year")}-${getPart("month")}-${getPart("day")}`;
+  if (selectedDate !== todayStr) return false;
+
+  const currentMinutes =
+    parseInt(getPart("hour"), 10) * 60 + parseInt(getPart("minute"), 10);
+  const [sh, sm] = slotTime.split(":").map(Number);
+  const slotMinutes = sh * 60 + sm;
+
+  return slotMinutes <= currentMinutes;
+}
+
 export function SelectDate({
   selectedDate,
   selectedSlot,
@@ -120,19 +145,24 @@ export function SelectDate({
                   </h4>
 
                   <div className="grid grid-cols-3 gap-2">
-                    {morning.map((slot) => (
-                      <div
-                        key={slot}
-                        onClick={() => onSelectSlot(slot)}
-                        className={`py-2.5 rounded-lg border text-center text-xs font-bold cursor-pointer transition-all ${
-                          selectedSlot === slot
-                            ? "bg-accent/20 border-accent text-accent"
-                            : "bg-surface/30 border-surface/40 text-white hover:border-surface/60"
-                        }`}
-                      >
-                        {slot}
-                      </div>
-                    ))}
+                    {morning.map((slot) => {
+                      const past = isSlotPast(selectedDate, slot);
+                      return (
+                        <div
+                          key={slot}
+                          onClick={() => !past && onSelectSlot(slot)}
+                          className={`py-2.5 rounded-lg border text-center text-xs font-bold transition-all ${
+                            past
+                              ? "bg-surface/10 border-surface/20 text-secondary/40 cursor-not-allowed"
+                              : selectedSlot === slot
+                                ? "bg-accent/20 border-accent text-accent cursor-pointer"
+                                : "bg-surface/30 border-surface/40 text-white hover:border-surface/60 cursor-pointer"
+                          }`}
+                        >
+                          {slot}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -144,19 +174,24 @@ export function SelectDate({
                     <Icon name="mynaui:moon" className="text-xl" /> Tarde
                   </h4>
                   <div className="grid grid-cols-3 gap-2">
-                    {afternoon.map((slot) => (
-                      <div
-                        key={slot}
-                        onClick={() => onSelectSlot(slot)}
-                        className={`py-2.5 rounded-lg border text-center text-xs font-bold cursor-pointer transition-all ${
-                          selectedSlot === slot
-                            ? "bg-accent/20 border-accent text-accent"
-                            : "bg-surface/30 border-surface/40 text-white hover:border-surface/60"
-                        }`}
-                      >
-                        {slot}
-                      </div>
-                    ))}
+                    {afternoon.map((slot) => {
+                      const past = isSlotPast(selectedDate, slot);
+                      return (
+                        <div
+                          key={slot}
+                          onClick={() => !past && onSelectSlot(slot)}
+                          className={`py-2.5 rounded-lg border text-center text-xs font-bold transition-all ${
+                            past
+                              ? "bg-surface/10 border-surface/20 text-secondary/40 cursor-not-allowed"
+                              : selectedSlot === slot
+                                ? "bg-accent/20 border-accent text-accent cursor-pointer"
+                                : "bg-surface/30 border-surface/40 text-white hover:border-surface/60 cursor-pointer"
+                          }`}
+                        >
+                          {slot}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
