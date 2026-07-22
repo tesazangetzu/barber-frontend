@@ -5,11 +5,11 @@ import { formatCurrency } from "../../lib/utils";
 import { formatoHoraCita, formatoFechaCita } from "../../lib/date-utils";
 
 const statusConfig = {
-  PENDING_PAYMENT: { label: "Pendiente Pago", classes: "bg-yellow-100 text-yellow-800" },
-  CONFIRMED: { label: "Confirmado", classes: "bg-blue-100 text-blue-800" },
-  IN_PROGRESS: { label: "En Progreso", classes: "bg-purple-100 text-purple-800" },
-  COMPLETED: { label: "Completado", classes: "bg-green-100 text-green-800" },
-  CANCELLED: { label: "Cancelado", classes: "bg-red-100 text-red-800" },
+  PENDING_PAYMENT: { label: "Pendiente Pago", classes: "bg-yellow-900/30 text-yellow-400" },
+  CONFIRMED: { label: "Confirmado", classes: "bg-blue-900/30 text-blue-400" },
+  IN_PROGRESS: { label: "En Progreso", classes: "bg-purple-900/30 text-purple-400" },
+  COMPLETED: { label: "Completado", classes: "bg-green-900/30 text-green-400" },
+  CANCELLED: { label: "Cancelado", classes: "bg-red-900/30 text-red-400" },
 };
 
 export default function AppointmentsContent() {
@@ -101,7 +101,7 @@ export default function AppointmentsContent() {
       label: "Pago",
       render: (v) => (
         <span className={`px-2 py-1 rounded text-xs font-semibold ${
-          v === "PAID" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"
+          v === "PAID" ? "bg-green-900/30 text-green-400" : "bg-yellow-900/30 text-yellow-400"
         }`}>
           {v === "PAID" ? "Pagado" : "Pendiente"}
         </span>
@@ -120,55 +120,55 @@ export default function AppointmentsContent() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-gray-800 mb-8">Gestión de Citas</h1>
+      <h1 className="text-3xl font-bold text-white mb-8">Gestión de Citas</h1>
 
-      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+      <div className="bg-[#131b2d] border border-[#1e1e1e] rounded-lg shadow-md p-4 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Buscar</label>
+            <label className="block text-sm font-medium text-gray-400 mb-1">Buscar</label>
             <input
               type="text"
               placeholder="Nombre, teléfono o email..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              className="w-full px-3 py-2 border border-[#2a2a2a] rounded-lg text-sm text-white bg-[#1e1e1e] focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37] outline-none placeholder:text-gray-500"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+            <label className="block text-sm font-medium text-gray-400 mb-1">Estado</label>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              className="w-full px-3 py-2 border border-[#2a2a2a] rounded-lg text-sm text-white bg-[#1e1e1e] focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37] outline-none"
             >
-              <option value="">Todos</option>
+              <option value="" className="bg-[#1e1e1e]">Todos</option>
               {Object.entries(statusConfig).map(([key, cfg]) => (
-                <option key={key} value={key}>{cfg.label}</option>
+                <option key={key} value={key} className="bg-[#1e1e1e]">{cfg.label}</option>
               ))}
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Barbero</label>
+            <label className="block text-sm font-medium text-gray-400 mb-1">Barbero</label>
             <select
               value={barberFilter}
               onChange={(e) => setBarberFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              className="w-full px-3 py-2 border border-[#2a2a2a] rounded-lg text-sm text-white bg-[#1e1e1e] focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37] outline-none"
             >
-              <option value="">Todos</option>
+              <option value="" className="bg-[#1e1e1e]">Todos</option>
               {barbers.map((b) => (
-                <option key={b.id} value={b.id}>{b.name}</option>
+                <option key={b.id} value={b.id} className="bg-[#1e1e1e]">{b.name}</option>
               ))}
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Por página</label>
+            <label className="block text-sm font-medium text-gray-400 mb-1">Por página</label>
             <select
               value={itemsPerPage}
               onChange={(e) => setItemsPerPage(Number(e.target.value))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              className="w-full px-3 py-2 border border-[#2a2a2a] rounded-lg text-sm text-white bg-[#1e1e1e] focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37] outline-none"
             >
               {[10, 25, 50, 100].map((n) => (
-                <option key={n} value={n}>{n}</option>
+                <option key={n} value={n} className="bg-[#1e1e1e]">{n}</option>
               ))}
             </select>
           </div>
@@ -183,8 +183,8 @@ export default function AppointmentsContent() {
       />
 
       {totalPages > 1 && (
-        <div className="bg-white rounded-b-lg shadow-md px-4 py-3 border-t border-gray-200 flex items-center justify-between">
-          <span className="text-sm text-gray-600">
+        <div className="bg-[#131b2d] border border-[#1e1e1e] rounded-b-lg shadow-md px-4 py-3 border-t border-[#1e1e1e] flex items-center justify-between">
+          <span className="text-sm text-gray-400">
             Mostrando {from}–{to} de {filtered.length} resultado{filtered.length !== 1 ? "s" : ""}
             {filtered.length !== appointments.length && ` (filtrados de ${appointments.length})`}
           </span>
@@ -192,7 +192,7 @@ export default function AppointmentsContent() {
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="px-3 py-1.5 rounded text-sm font-medium border border-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+              className="px-3 py-1.5 rounded text-sm font-medium border border-[#2a2a2a] text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#1e1e1e] transition-colors"
             >
               Anterior
             </button>
@@ -200,11 +200,11 @@ export default function AppointmentsContent() {
               <>
                 <button
                   onClick={() => setCurrentPage(1)}
-                  className="px-3 py-1.5 rounded text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
+                  className="px-3 py-1.5 rounded text-sm font-medium border border-[#2a2a2a] text-gray-300 hover:bg-[#1e1e1e] transition-colors"
                 >
                   1
                 </button>
-                {pagStart > 2 && <span className="px-1 text-gray-400">···</span>}
+                {pagStart > 2 && <span className="px-1 text-gray-500">···</span>}
               </>
             )}
             {pageNumbers.map((p) => (
@@ -213,8 +213,8 @@ export default function AppointmentsContent() {
                 onClick={() => setCurrentPage(p)}
                 className={`px-3 py-1.5 rounded text-sm font-medium border transition-colors ${
                   p === currentPage
-                    ? "bg-blue-600 text-white border-blue-600"
-                    : "border-gray-300 text-gray-700 hover:bg-gray-100"
+                    ? "bg-[#d4af37] text-[#0a0f1a] border-[#d4af37] font-bold"
+                    : "border-[#2a2a2a] text-gray-300 hover:bg-[#1e1e1e]"
                 }`}
               >
                 {p}
@@ -222,10 +222,10 @@ export default function AppointmentsContent() {
             ))}
             {pagEnd < totalPages && (
               <>
-                {pagEnd < totalPages - 1 && <span className="px-1 text-gray-400">···</span>}
+                {pagEnd < totalPages - 1 && <span className="px-1 text-gray-500">···</span>}
                 <button
                   onClick={() => setCurrentPage(totalPages)}
-                  className="px-3 py-1.5 rounded text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
+                  className="px-3 py-1.5 rounded text-sm font-medium border border-[#2a2a2a] text-gray-300 hover:bg-[#1e1e1e] transition-colors"
                 >
                   {totalPages}
                 </button>
@@ -234,7 +234,7 @@ export default function AppointmentsContent() {
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
-              className="px-3 py-1.5 rounded text-sm font-medium border border-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+              className="px-3 py-1.5 rounded text-sm font-medium border border-[#2a2a2a] text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#1e1e1e] transition-colors"
             >
               Siguiente
             </button>

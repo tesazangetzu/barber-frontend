@@ -146,14 +146,14 @@ export default function SchedulesContent() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-gray-800 mb-8">Gestión de Horarios</h1>
+      <h1 className="text-3xl font-bold text-white mb-8">Gestión de Horarios</h1>
 
-      <div className="bg-white rounded-lg shadow-md">
-        <div className="p-4 md:p-6 border-b border-gray-200 flex items-center justify-between">
-          <h2 className="text-xl md:text-2xl font-bold text-gray-800">Barberos</h2>
+      <div className="bg-[#131b2d] border border-[#1e1e1e] rounded-lg shadow-md">
+        <div className="p-4 md:p-6 border-b border-[#1e1e1e] flex items-center justify-between">
+          <h2 className="text-xl md:text-2xl font-bold text-white">Barberos</h2>
           <button
             onClick={handleAdd}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors text-sm font-medium"
+            className="flex items-center gap-2 bg-[#d4af37] hover:bg-[#d4af37]/90 text-[#0a0f1a] px-4 py-2 rounded-lg transition-colors text-sm font-bold"
           >
             <Plus size={18} />
             Nuevo Horario
@@ -170,20 +170,20 @@ export default function SchedulesContent() {
               const isOpen = expandedId === barber.id;
               const scheds = barber.schedules;
               return (
-                <div key={barber.id} className="border-b border-gray-100 last:border-b-0">
+                <div key={barber.id} className="border-b border-[#1e1e1e] last:border-b-0">
                   <button
                     onClick={() => setExpandedId(isOpen ? null : barber.id)}
-                    className="w-full flex items-center justify-between px-4 md:px-6 py-4 hover:bg-gray-50 transition-colors text-left"
+                    className="w-full flex items-center justify-between px-4 md:px-6 py-4 hover:bg-[#1e1e1e]/50 transition-colors text-left"
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       {isOpen ? <ChevronDown size={18} className="shrink-0 text-gray-400" /> : <ChevronRight size={18} className="shrink-0 text-gray-400" />}
-                      <span className="font-semibold text-gray-800">{barber.name}</span>
-                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${scheds.length > 0 ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}>
+                      <span className="font-semibold text-white">{barber.name}</span>
+                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${scheds.length > 0 ? "bg-green-900/30 text-green-400" : "bg-[#1e1e1e] text-gray-500"}`}>
                         {scheds.length} horario{scheds.length !== 1 ? "s" : ""}
                       </span>
                     </div>
                     {scheds.length > 0 && (
-                      <div className="hidden md:flex items-center gap-3 text-sm text-gray-500 ml-4 shrink-0">
+                      <div className="hidden md:flex items-center gap-3 text-sm text-gray-400 ml-4 shrink-0">
                         <Clock size={14} />
                         <span>{scheds.map((s) => getDayOfWeekName(s.day_of_week).slice(0, 3)).join(", ")}</span>
                         <span className="font-mono">{formatTime(scheds[0].start_hour)}–{formatTime(scheds[0].end_hour)}</span>
@@ -192,7 +192,7 @@ export default function SchedulesContent() {
                   </button>
 
                   {isOpen && (
-                    <div className="bg-gray-50 border-t border-gray-100">
+                    <div className="bg-[#0a0f1a] border-t border-[#1e1e1e]">
                       {scheds.length === 0 ? (
                         <div className="px-4 md:px-16 py-6 text-sm text-gray-500">
                           Este barbero no tiene horarios configurados.
@@ -201,12 +201,12 @@ export default function SchedulesContent() {
                         <div className="overflow-x-auto">
                           <table className="w-full text-sm">
                             <thead>
-                              <tr className="border-b border-gray-200">
-                                <th className="px-4 md:px-6 py-3 text-left text-gray-600 font-semibold">Día</th>
-                                <th className="px-4 py-3 text-left text-gray-600 font-semibold">Inicio</th>
-                                <th className="px-4 py-3 text-left text-gray-600 font-semibold">Fin</th>
-                                <th className="px-4 py-3 text-left text-gray-600 font-semibold">Descanso</th>
-                                <th className="px-4 py-3 text-right text-gray-600 font-semibold">Acción</th>
+                              <tr className="border-b border-[#1e1e1e]">
+                                <th className="px-4 md:px-6 py-3 text-left text-gray-400 font-semibold">Día</th>
+                                <th className="px-4 py-3 text-left text-gray-400 font-semibold">Inicio</th>
+                                <th className="px-4 py-3 text-left text-gray-400 font-semibold">Fin</th>
+                                <th className="px-4 py-3 text-left text-gray-400 font-semibold">Descanso</th>
+                                <th className="px-4 py-3 text-right text-gray-400 font-semibold">Acción</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -214,12 +214,12 @@ export default function SchedulesContent() {
                                 const s = scheds.find((x) => x.day_of_week === dow);
                                 if (!s) return null;
                                 return (
-                                  <tr key={s.id} className="border-b border-gray-100 hover:bg-white transition-colors">
-                                    <td className="px-4 md:px-6 py-3 font-medium text-gray-800">
+                                  <tr key={s.id} className="border-b border-[#1e1e1e] hover:bg-[#1e1e1e]/30 transition-colors">
+                                    <td className="px-4 md:px-6 py-3 font-medium text-white">
                                       {getDayOfWeekName(dow)}
                                     </td>
-                                    <td className="px-4 py-3 font-mono text-gray-700">{formatTime(s.start_hour)}</td>
-                                    <td className="px-4 py-3 font-mono text-gray-700">{formatTime(s.end_hour)}</td>
+                                    <td className="px-4 py-3 font-mono text-gray-300">{formatTime(s.start_hour)}</td>
+                                    <td className="px-4 py-3 font-mono text-gray-300">{formatTime(s.end_hour)}</td>
                                     <td className="px-4 py-3 font-mono text-gray-500">
                                       {s.break_start && s.break_end
                                         ? `${formatTime(s.break_start)}–${formatTime(s.break_end)}`
@@ -229,14 +229,14 @@ export default function SchedulesContent() {
                                       <div className="flex items-center justify-end gap-1">
                                         <button
                                           onClick={() => handleEdit(s)}
-                                          className="p-1.5 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"
+                                          className="p-1.5 text-[#d4af37] hover:bg-[#d4af37]/10 rounded-lg transition-colors"
                                           title="Editar horario"
                                         >
                                           <Edit2 size={16} />
                                         </button>
                                         <button
                                           onClick={() => handleDelete(s.id)}
-                                          className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                                          className="p-1.5 text-red-400 hover:bg-red-400/10 rounded-lg transition-colors"
                                           title="Eliminar horario"
                                         >
                                           <Trash2 size={16} />

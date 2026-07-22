@@ -4,12 +4,12 @@ export function FormGroup({ label, error, children }) {
   return (
     <div className="mb-4">
       {label && (
-        <label className="block text-gray-700 font-semibold mb-2">
+        <label className="block text-gray-300 font-semibold mb-2">
           {label}
         </label>
       )}
       {children}
-      {error && <p className="text-red-600 text-sm mt-1">{error}</p>}
+      {error && <p className="text-red-400 text-sm mt-1">{error}</p>}
     </div>
   );
 }
@@ -32,8 +32,8 @@ export function TextInput({
         value={value}
         onChange={onChange}
         required={required}
-        className={`w-full px-4 py-2 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-100 disabled:text-gray-500 disabled:bg-gray-100 ${
-          error ? "border-red-500" : "border-gray-300"
+        className={`w-full px-4 py-2 border rounded-lg text-white bg-[#1e1e1e] focus:outline-none focus:ring-2 focus:ring-[#d4af37] disabled:opacity-100 disabled:text-gray-500 disabled:bg-[#0a0f1a] ${
+          error ? "border-red-500" : "border-[#2a2a2a]"
         }`}
         {...props}
       />
@@ -57,14 +57,14 @@ export function SelectInput({
         value={value}
         onChange={onChange}
         required={required}
-        className={`w-full px-4 py-2 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-100 disabled:text-gray-500 disabled:bg-gray-100 ${
-          error ? "border-red-500" : "border-gray-300"
+        className={`w-full px-4 py-2 border rounded-lg text-white bg-[#1e1e1e] focus:outline-none focus:ring-2 focus:ring-[#d4af37] disabled:opacity-100 disabled:text-gray-500 disabled:bg-[#0a0f1a] ${
+          error ? "border-red-500" : "border-[#2a2a2a]"
         }`}
         {...props}
       >
-        <option value="">{placeholder}</option>
+        <option value="" className="bg-[#1e1e1e]">{placeholder}</option>
         {options?.map((opt) => (
-          <option key={opt.value} value={opt.value}>
+          <option key={opt.value} value={opt.value} className="bg-[#1e1e1e]">
             {opt.label}
           </option>
         ))}
@@ -91,8 +91,8 @@ export function TextArea({
         onChange={onChange}
         required={required}
         rows={rows}
-        className={`w-full px-4 py-2 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-vertical disabled:opacity-100 disabled:text-gray-500 disabled:bg-gray-100 ${
-          error ? "border-red-500" : "border-gray-300"
+        className={`w-full px-4 py-2 border rounded-lg text-white bg-[#1e1e1e] focus:outline-none focus:ring-2 focus:ring-[#d4af37] resize-vertical disabled:opacity-100 disabled:text-gray-500 disabled:bg-[#0a0f1a] ${
+          error ? "border-red-500" : "border-[#2a2a2a]"
         }`}
         {...props}
       />
@@ -121,8 +121,8 @@ export function NumberInput({
         required={required}
         step={step}
         min={min}
-        className={`w-full px-4 py-2 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-100 disabled:text-gray-500 disabled:bg-gray-100 ${
-          error ? "border-red-500" : "border-gray-300"
+        className={`w-full px-4 py-2 border rounded-lg text-white bg-[#1e1e1e] focus:outline-none focus:ring-2 focus:ring-[#d4af37] disabled:opacity-100 disabled:text-gray-500 disabled:bg-[#0a0f1a] ${
+          error ? "border-red-500" : "border-[#2a2a2a]"
         }`}
         {...props}
       />

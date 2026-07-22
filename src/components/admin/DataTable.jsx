@@ -33,13 +33,13 @@ export default function DataTable({
   }, [data, sortConfig]);
 
   return (
-    <div className="bg-white rounded-lg shadow-md">
-      <div className="p-3 md:p-6 border-b border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-0">
-        <h2 className="text-xl md:text-2xl font-bold text-gray-800">{title}</h2>
+    <div className="bg-[#131b2d] border border-[#1e1e1e] rounded-lg shadow-md">
+      <div className="p-3 md:p-6 border-b border-[#1e1e1e] flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-0">
+        <h2 className="text-xl md:text-2xl font-bold text-white">{title}</h2>
         {onAdd && (
           <button
             onClick={onAdd}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 md:px-4 py-2 rounded-lg transition-colors duration-200 text-sm md:text-base w-full md:w-auto justify-center md:justify-start"
+            className="flex items-center gap-2 bg-[#d4af37] hover:bg-[#d4af37]/90 text-[#0a0f1a] px-3 md:px-4 py-2 rounded-lg transition-colors duration-200 text-sm md:text-base w-full md:w-auto justify-center md:justify-start font-bold"
           >
             <Plus size={18} />
             Nuevo
@@ -50,13 +50,13 @@ export default function DataTable({
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="bg-gray-100 border-b border-gray-200">
+            <tr className="bg-[#0a0f1a] border-b border-[#1e1e1e]">
               {columns.map((col) => (
                 <th
                   key={col.key}
                   onClick={() => col.sortable && handleSort(col.key)}
-                  className={`px-6 py-3 text-left text-gray-700 font-semibold ${
-                    col.sortable ? "cursor-pointer hover:bg-gray-200" : ""
+                  className={`px-6 py-3 text-left text-gray-300 font-semibold ${
+                    col.sortable ? "cursor-pointer hover:bg-[#1e1e1e]" : ""
                   }`}
                 >
                   <div className="flex items-center gap-2">
@@ -70,7 +70,7 @@ export default function DataTable({
                 </th>
               ))}
               {hasActions && (
-                <th className="px-6 py-3 text-left text-gray-700 font-semibold">
+                <th className="px-6 py-3 text-left text-gray-300 font-semibold">
                   Acciones
                 </th>
               )}
@@ -99,10 +99,10 @@ export default function DataTable({
               sortedData.map((row) => (
                 <tr
                   key={row.id ?? row[columns[0]?.key]}
-                  className="border-b border-gray-200 hover:bg-gray-50 transition-colors duration-150"
+                  className="border-b border-[#1e1e1e] hover:bg-[#1e1e1e]/50 transition-colors duration-150"
                 >
                   {columns.map((col) => (
-                    <td key={col.key} className="px-6 py-4 text-gray-700">
+                    <td key={col.key} className="px-6 py-4 text-gray-300">
                       {col.render
                         ? col.render(row[col.key], row)
                         : row[col.key]}
@@ -114,7 +114,7 @@ export default function DataTable({
                         {onEdit && (
                           <button
                             onClick={() => onEdit(row)}
-                            className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors duration-200"
+                            className="p-2 text-[#d4af37] hover:bg-[#d4af37]/10 rounded-lg transition-colors duration-200"
                             title="Editar"
                           >
                             <Edit2 size={18} />
@@ -123,7 +123,7 @@ export default function DataTable({
                         {onDelete && (
                           <button
                             onClick={() => onDelete(row.id)}
-                            className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors duration-200"
+                            className="p-2 text-red-400 hover:bg-red-400/10 rounded-lg transition-colors duration-200"
                             title="Eliminar"
                           >
                             <Trash2 size={18} />

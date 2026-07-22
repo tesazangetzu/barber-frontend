@@ -96,14 +96,14 @@ export default function DashboardContent() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-xl text-gray-600">Cargando dashboard...</p>
+        <p className="text-xl text-gray-400">Cargando dashboard...</p>
       </div>
     );
   }
 
   return (
     <div>
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 md:mb-8">
+      <h1 className="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8">
         👑 Panel de Administración
       </h1>
 

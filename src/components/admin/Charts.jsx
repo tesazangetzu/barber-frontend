@@ -21,11 +21,11 @@ const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"];
 export function StatsOverview({ stats }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-      <div className="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
+      <div className="bg-[#131b2d] border border-[#1e1e1e] rounded-lg shadow p-6 border-l-4 border-blue-500">
         <div className="flex justify-between items-center">
           <div>
-            <p className="text-gray-600 text-sm">Barberos</p>
-            <p className="text-3xl font-bold text-gray-800">
+            <p className="text-gray-400 text-sm">Barberos</p>
+            <p className="text-3xl font-bold text-white">
               {stats?.barbers || 0}
             </p>
           </div>
@@ -33,11 +33,11 @@ export function StatsOverview({ stats }) {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
+      <div className="bg-[#131b2d] border border-[#1e1e1e] rounded-lg shadow p-6 border-l-4 border-green-500">
         <div className="flex justify-between items-center">
           <div>
-            <p className="text-gray-600 text-sm">Servicios</p>
-            <p className="text-3xl font-bold text-gray-800">
+            <p className="text-gray-400 text-sm">Servicios</p>
+            <p className="text-3xl font-bold text-white">
               {stats?.services || 0}
             </p>
           </div>
@@ -45,11 +45,11 @@ export function StatsOverview({ stats }) {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow p-6 border-l-4 border-orange-500">
+      <div className="bg-[#131b2d] border border-[#1e1e1e] rounded-lg shadow p-6 border-l-4 border-orange-500">
         <div className="flex justify-between items-center">
           <div>
-            <p className="text-gray-600 text-sm">Citas Totales</p>
-            <p className="text-3xl font-bold text-gray-800">
+            <p className="text-gray-400 text-sm">Citas Totales</p>
+            <p className="text-3xl font-bold text-white">
               {stats?.totalAppointments || 0}
             </p>
           </div>
@@ -57,11 +57,11 @@ export function StatsOverview({ stats }) {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow p-6 border-l-4 border-red-500">
+      <div className="bg-[#131b2d] border border-[#1e1e1e] rounded-lg shadow p-6 border-l-4 border-red-500">
         <div className="flex justify-between items-center">
           <div>
-            <p className="text-gray-600 text-sm">Ingresos Totales</p>
-            <p className="text-3xl font-bold text-gray-800">
+            <p className="text-gray-400 text-sm">Ingresos Totales</p>
+            <p className="text-3xl font-bold text-white">
               S/ {stats?.totalRevenue.toFixed(2) || 0}
             </p>
           </div>
@@ -74,8 +74,8 @@ export function StatsOverview({ stats }) {
 
 export function AppointmentsChart({ data }) {
   return (
-    <div className="bg-white rounded-lg shadow p-6 mb-8">
-      <h3 className="text-lg font-bold text-gray-800 mb-6">Citas por Día</h3>
+    <div className="bg-[#131b2d] border border-[#1e1e1e] rounded-lg shadow p-6 mb-8">
+      <h3 className="text-lg font-bold text-white mb-6">Citas por Día</h3>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -92,8 +92,8 @@ export function AppointmentsChart({ data }) {
 
 export function RevenueChart({ data }) {
   return (
-    <div className="bg-white rounded-lg shadow p-6 mb-8">
-      <h3 className="text-lg font-bold text-gray-800 mb-6">Ingresos por Día</h3>
+    <div className="bg-[#131b2d] border border-[#1e1e1e] rounded-lg shadow p-6 mb-8">
+      <h3 className="text-lg font-bold text-white mb-6">Ingresos por Día</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -115,8 +115,8 @@ export function RevenueChart({ data }) {
 
 export function AppointmentStatusChart({ data }) {
   return (
-    <div className="bg-white rounded-lg shadow p-6">
-      <h3 className="text-lg font-bold text-gray-800 mb-6">Estado de Citas</h3>
+    <div className="bg-[#131b2d] border border-[#1e1e1e] rounded-lg shadow p-6">
+      <h3 className="text-lg font-bold text-white mb-6">Estado de Citas</h3>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie

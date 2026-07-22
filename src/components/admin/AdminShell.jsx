@@ -77,11 +77,11 @@ export default function AdminShell() {
   return (
     <div className="flex flex-col md:flex-row min-h-screen md:pl-64">
       {/* Mobile header with hamburger */}
-      <div className="md:hidden bg-blue-900 text-white p-4 flex items-center justify-between fixed top-0 left-0 right-0 z-40">
+      <div className="md:hidden bg-[#0a0f1a] text-white p-4 flex items-center justify-between fixed top-0 left-0 right-0 z-40 border-b border-[#1e1e1e]">
         <h1 className="text-lg font-bold">Panel Admin</h1>
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="p-2 hover:bg-blue-800 rounded-lg transition-colors"
+          className="p-2 hover:bg-[#1e1e1e] rounded-lg transition-colors"
           aria-label="Toggle menu"
         >
           {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
@@ -110,7 +110,7 @@ export default function AdminShell() {
       </div>
 
       {/* Main content */}
-      <main className="flex-1 w-full md:w-auto pt-26 md:pt-12 p-4 md:p-8 min-h-screen">
+      <main className="flex-1 w-full md:w-auto pt-26 md:pt-12 p-4 md:p-8 min-h-screen overflow-x-auto">
         <ActivePage />
       </main>
     </div>

@@ -17,14 +17,14 @@ export default function AdminSidebar({ activeRoute, onNavigate }) {
   };
 
   return (
-    <aside className="w-full h-full bg-linear-to-b from-blue-900 to-blue-800 text-white shadow-lg flex flex-col">
+    <aside className="w-full h-full bg-[#0a0f1a] border-r border-[#1e1e1e] text-white shadow-lg flex flex-col">
       <nav className="p-6 flex-1">
-        <div className="mb-8 pb-6 border-b border-blue-700">
+        <div className="mb-8 pb-6 border-b border-[#1e1e1e]">
           <h2 className="text-2xl font-bold flex items-center gap-2">
-            <BarChart3 size={24} />
+            <BarChart3 size={24} className="text-[#d4af37]" />
             <span>Panel Admin</span>
           </h2>
-          <p className="text-blue-200 text-sm mt-2">👑 Superusuario</p>
+          <p className="text-[#d4af37]/70 text-sm mt-2">👑 Superusuario</p>
         </div>
 
         <ul className="space-y-2">
@@ -39,7 +39,9 @@ export default function AdminSidebar({ activeRoute, onNavigate }) {
                   onNavigate(key);
                 }}
                 className={`flex w-full items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 ${
-                  activeRoute === key ? "bg-blue-700" : "hover:bg-blue-700"
+                  activeRoute === key
+                    ? "bg-[#d4af37]/10 text-[#d4af37]"
+                    : "text-gray-400 hover:bg-[#1e1e1e] hover:text-white"
                 }`}
               >
                 <Icon size={20} />
@@ -50,12 +52,11 @@ export default function AdminSidebar({ activeRoute, onNavigate }) {
         </ul>
       </nav>
 
-      {/* Logout button at bottom */}
-      <div className="p-6 border-t border-blue-700">
+      <div className="p-6 border-t border-[#1e1e1e]">
         <button
           type="button"
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-600 transition-colors duration-200 text-red-100 hover:text-white cursor-pointer"
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-600/20 transition-colors duration-200 text-red-400 hover:text-red-300 cursor-pointer"
         >
           <LogOut size={20} />
           <span>Cerrar Sesión</span>
